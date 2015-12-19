@@ -69,4 +69,4 @@ mkjsonIfNotExisting(path.join(`${homieDir}/ota/manifest.json`), { firmwares: [] 
 mkdirIfNotExisting(path.join(`${homieDir}/ota/bin`));
 
 require('../lib/config').dataDir = homieDir;
-require('../server');
+require('../index');

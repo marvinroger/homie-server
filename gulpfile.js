@@ -55,7 +55,7 @@ gulp.task('npm-dist:clean', function (done) {
 });
 
 gulp.task('npm-dist', ['npm-dist:clean'], function () {
-  let js = gulp.src(['./server.js', './{bin,lib}/**/*.js'])
+  let js = gulp.src(['./index.js', './{bin,lib}/**/*.js'], { base: './' })
     .pipe(babel())
     .pipe(gulp.dest('./dist'));
 
