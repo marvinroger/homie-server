@@ -3,6 +3,8 @@ Homie server
 
 Server of homie, an opiniated home automation system using MQTT. The project is actually in alpha.
 
+![homie server screenshot](screenshot.jpg)
+
 ## Features
 
 * OTA updates
