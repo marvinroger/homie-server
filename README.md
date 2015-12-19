@@ -1,7 +1,7 @@
 Homie
 =====
 
-An opiniated home automation system using MQTT.
+An opiniated home automation system using MQTT. The project is actually in alpha.
 
 ## Features
 
