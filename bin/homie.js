@@ -9,7 +9,7 @@ let clor = require('clor');
 let argv = require('yargs')
   .usage('Usage: $0')
   .default('dataDir', () => {
-    return os.homedir();
+    return null;
   })
   .argv;
 
@@ -32,13 +32,15 @@ let fail = (message) => {
 
 let dataDir = argv.dataDir;
 
+if (dataDir === null) {
+  dataDir = path.join(os.homedir(), '/.homie');
+}
+
 try {
   fs.accessSync(dataDir, fs.R_OK | fs.W_OK);
 } catch (err) {
   fail(`Cannot access dataDir ${dataDir}`);
 }
-
-let homieDir = path.join(`${dataDir}/.homie`);
 
 let mkdirIfNotExisting = (dir) => {
   try {
@@ -61,12 +63,12 @@ let mkjsonIfNotExisting = (path, object) => {
   }
 };
 
-mkdirIfNotExisting(homieDir);
-mkjsonIfNotExisting(path.join(`${homieDir}/infrastructure.json`), { devices: [] });
-mkjsonIfNotExisting(path.join(`${homieDir}/config.json`), { });
-mkdirIfNotExisting(path.join(`${homieDir}/ota`));
-mkjsonIfNotExisting(path.join(`${homieDir}/ota/manifest.json`), { firmwares: [] });
-mkdirIfNotExisting(path.join(`${homieDir}/ota/bin`));
+mkdirIfNotExisting(dataDir);
+mkjsonIfNotExisting(path.join(dataDir, '/infrastructure.json'), { devices: [] });
+mkjsonIfNotExisting(path.join(dataDir, '/config.json'), { });
+mkdirIfNotExisting(path.join(dataDir, '/ota'));
+mkjsonIfNotExisting(path.join(dataDir, '/ota/manifest.json'), { firmwares: [] });
+mkdirIfNotExisting(path.join(dataDir, '/ota/bin'));
 
-require('../lib/config').dataDir = homieDir;
+require('../lib/config').dataDir = dataDir;
 require('../index');
