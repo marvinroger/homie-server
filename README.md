@@ -12,6 +12,8 @@ Server of homie, an opiniated home automation system using MQTT. The project is 
 
 ## Usage
 
+**!!! Not yet available on npm !!!**
+
 `npm install -g homie-server`
 
 Start homie by calling `homie`. You can optionally provide a `--dataDir` argument that will be used to store the homie data. By default, this directory is `<home directory>/.homie`.
