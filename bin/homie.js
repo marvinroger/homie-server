@@ -1,3 +1,5 @@
+#!/bin/env node
+
 'use strict';
 
 let os = require('os');
