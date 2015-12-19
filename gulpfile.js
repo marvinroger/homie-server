@@ -70,8 +70,9 @@ gulp.task('npm-dist', ['npm-dist:clean'], function () {
 
   let pkg = gulp.src('./package.json')
     .pipe(jsoneditor(function (json) {
-      json.scripts = {};
-      json.devDependencies = {};
+      delete json.scripts;
+      delete json.devDependencies;
+      delete json.semistandard;
       return json;
     }))
     .pipe(gulp.dest('./dist'));
