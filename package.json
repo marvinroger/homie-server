@@ -12,6 +12,7 @@
   "bin": {
     "homie": "./bin/homie.js"
   },
+  "preferGlobal": true,
   "author": {
     "name": "Marvin Roger",
     "email": "bonjourmarvin@marvinroger.fr",
