@@ -41,7 +41,7 @@ app.get('*', function (req, res) {
 server.listen(3000, function () {
   let host = server.address().address;
   let port = server.address().port;
-  log.info(`listening on ${host}:${port}`);
+  log.info(`HTTP server listening on ${host}:${port}`);
 }).on('error', function (err) {
   log.fatal(err);
 });

@@ -61,7 +61,7 @@ let mkjsonIfNotExisting = (path, object) => {
 
 mkdirIfNotExisting(homieDir);
 mkjsonIfNotExisting(path.join(`${homieDir}/infrastructure.json`), { devices: [] });
-mkjsonIfNotExisting(path.join(`${homieDir}/config.json`), { broker: 'mqtt://127.0.0.1' });
+mkjsonIfNotExisting(path.join(`${homieDir}/config.json`), { });
 mkdirIfNotExisting(path.join(`${homieDir}/ota`));
 mkjsonIfNotExisting(path.join(`${homieDir}/ota/manifest.json`), { firmwares: [] });
 mkdirIfNotExisting(path.join(`${homieDir}/ota/bin`));
