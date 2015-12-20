@@ -1,19 +1,19 @@
 'use strict';
 
-let gulp = require('gulp');
-let babel = require('gulp-babel'); // to distribute the npm module
-let watch = require('gulp-watch'); // gulp.watch doesn't detect new files
-let merge = require('merge-stream'); // handle multiple gulp.src in one task
-let jsoneditor = require('gulp-json-editor'); // edit json in stream
-let del = require('del'); // delete files
-let runSequence = require('run-sequence');
-let notifier = require('node-notifier');
-let sourcemaps = require('gulp-sourcemaps');
-let uglify = require('gulp-uglify');
-let browserify = require('browserify');
-let babelify = require('babelify');
-let source = require('vinyl-source-stream'); // helper for browserify text stream to gulp pipeline
-let buffer = require('vinyl-buffer'); // helper for browserify
+import gulp from 'gulp';
+import babel from 'gulp-babel'; // to distribute the npm module
+import watch from 'gulp-watch'; // gulp.watch doesn't detect new files
+import merge from 'merge-stream'; // handle multiple gulp.src in one task
+import jsoneditor from 'gulp-json-editor'; // edit json in stream
+import del from 'del'; // delete files
+import runSequence from 'run-sequence';
+import notifier from 'node-notifier';
+import sourcemaps from 'gulp-sourcemaps';
+import uglify from 'gulp-uglify';
+import browserify from 'browserify';
+import babelify from 'babelify';
+import source from 'vinyl-source-stream'; // helper for browserify text stream to gulp pipeline
+import buffer from 'vinyl-buffer'; // helper for browserify
 
 let errorHandler = function (task) {
   return function (error) {

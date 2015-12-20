@@ -1,10 +1,11 @@
 'use strict';
 
-let express = require('express');
+import express from 'express';
 
-let log = require('./lib/log');
-let infrastructure = require('./lib/infrastructure');
-let ota = require('./lib/ota');
+import log from './lib/log';
+import infrastructure from './lib/infrastructure';
+import ota from './lib/ota';
+
 let app = express();
 let server = require('http').createServer(app);
 let socketIo = require('socket.io')(server);

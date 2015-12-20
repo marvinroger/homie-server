@@ -2,18 +2,21 @@
 
 'use strict';
 
-let os = require('os');
-let path = require('path');
-let fs = require('fs');
-let clor = require('clor');
-let argv = require('yargs')
+import os from 'os';
+import path from 'path';
+import fs from 'fs';
+import clor from 'clor';
+import yargs from 'yargs';
+
+import pkg from '../package';
+import config from '../lib/config';
+
+let argv = yargs
   .usage('Usage: $0')
   .default('dataDir', () => {
     return null;
   })
   .argv;
-
-let pkg = require('../package');
 
 let homieStyled = clor.magenta(`\
   _ _              _
@@ -46,19 +49,14 @@ let mkdirIfNotExisting = (dir) => {
   try {
     fs.mkdirSync(dir);
   } catch (err) {
+    return;
   }
 };
 
 let mkjsonIfNotExisting = (path, object) => {
-  let exist;
   try {
     fs.accessSync(path, fs.R_OK | fs.W_OK);
-    exist = true;
   } catch (err) {
-    exist = false;
-  }
-
-  if (!exist) {
     fs.writeFileSync(path, JSON.stringify(object, null, 2), 'utf8');
   }
 };
@@ -70,5 +68,5 @@ mkdirIfNotExisting(path.join(dataDir, '/ota'));
 mkjsonIfNotExisting(path.join(dataDir, '/ota/manifest.json'), { firmwares: [] });
 mkdirIfNotExisting(path.join(dataDir, '/ota/bin'));
 
-require('../lib/config').dataDir = dataDir;
+config.dataDir = dataDir;
 require('../index');
