@@ -1,7 +1,9 @@
 Homie server
 ============
 
-Server of homie, an opiniated home automation system using MQTT. The project is actually in alpha.
+[![npm version](https://img.shields.io/npm/v/homie-server.svg)](https://www.npmjs.com/package/homie-server) [![Dependency Status](https://david-dm.org/marvinroger/homie-server.svg?style=flat)](https://david-dm.org/marvinroger/homie-server) [![devDependency Status](https://david-dm.org/marvinroger/homie-server/dev-status.svg?style=flat)](https://david-dm.org/marvinroger/homie-server#info=devDependencies)
+
+Server of homie, an opiniated home automation system using MQTT. The project is currently in alpha.
 
 ![homie server screenshot](screenshot.png)
 
