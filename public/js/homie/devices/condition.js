@@ -10,7 +10,7 @@ export default class Condition extends React.Component {
   }
 
   render () {
-    let conditionText;
+    let conditionText = undefined;
     switch (this.props.state.condition) {
       case 'clear-day':
         conditionText = 'Jour clair';
@@ -47,7 +47,7 @@ export default class Condition extends React.Component {
     return (
       <Device image={this.props.state.condition} color='#325159' {...this.props}>
         <h3 style={{ color: '#1B1C1D' }}>
-          { conditionText }
+          { typeof conditionText !== 'undefined' ? conditionText : '?' }
         </h3>
       </Device>
     );

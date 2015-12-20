@@ -15,7 +15,7 @@ export default class Light extends React.Component {
 
   render () {
     return (
-      <Device image={this.props.state.on ? 'on' : 'off'} color='#ea6153' ref='device' {...this.props}>
+      <Device image={typeof this.props.state.on === 'undefined' ? undefined : this.props.state.on ? 'on' : 'off'} color='#ea6153' ref='device' {...this.props}>
         <div className='ui two buttons'>
           <button className='ui basic green icon compact button' onClick={() => this.toggle('true')}>
             <i className='toggle on icon'></i><br/>

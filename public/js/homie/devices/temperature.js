@@ -14,7 +14,7 @@ export default class Temperature extends React.Component {
       <Device image='thermometer' color='#e67e22' {...this.props}>
         <div className='ui small horizontal statistic'>
           <div className='value'>
-            { this.props.state.temperature }
+            { typeof this.props.state.temperature !== 'undefined' ? this.props.state.temperature : '?' }
           </div>
           <div className='label'>
             °C
