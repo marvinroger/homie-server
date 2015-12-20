@@ -7,7 +7,6 @@ import socketIo from 'socket.io';
 import config from './lib/config';
 import log from './lib/log';
 import infrastructure from './lib/infrastructure';
-import ota from './lib/ota';
 
 let app = express();
 let server = createServer(app);
