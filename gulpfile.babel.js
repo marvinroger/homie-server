@@ -54,12 +54,15 @@ gulp.task('npm-dist:clean', function (done) {
   });
 });
 
-gulp.task('npm-dist', ['npm-dist:clean'], function () {
+gulp.task('npm-dist', ['npm-dist:clean', 'es6-7'], function () {
   let js = gulp.src(['./index.js', './{bin,lib}/**/*.js'], { base: './' })
     .pipe(babel())
     .pipe(gulp.dest('./dist'));
 
-  let publ = gulp.src('./public/**/*', { base: './' })
+  let publ = gulp.src(['./public/**/*', '!./public/js{,/**/*}'], { base: './' })
+    .pipe(gulp.dest('./dist'));
+
+  let clientjs = gulp.src('./public/js/{bundle.min.js,bundle.min.js.map}', { base: './' })
     .pipe(gulp.dest('./dist'));
 
   let json = gulp.src('./lib/**/*.json', { base: './' })
@@ -77,5 +80,5 @@ gulp.task('npm-dist', ['npm-dist:clean'], function () {
     }))
     .pipe(gulp.dest('./dist'));
 
-  return merge(js, publ, json, root, pkg);
+  return merge(js, publ, clientjs, json, root, pkg);
 });
