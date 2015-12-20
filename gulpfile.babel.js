@@ -56,7 +56,7 @@ gulp.task('npm-dist:clean', function (done) {
 
 gulp.task('npm-dist', ['npm-dist:clean', 'es6-7'], function () {
   let js = gulp.src(['./index.js', './{bin,lib}/**/*.js'], { base: './' })
-    .pipe(babel())
+    .pipe(babel({ 'plugins': ['transform-runtime'] }))
     .pipe(gulp.dest('./dist'));
 
   let publ = gulp.src(['./public/**/*', '!./public/js{,/**/*}'], { base: './' })
