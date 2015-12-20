@@ -14,17 +14,15 @@ Server of homie, an opiniated home automation system using MQTT. The project is 
 
 ## Usage
 
-**!!! Not yet available on npm !!!**
-
 `npm install -g homie-server`
 
-Start homie by calling `homie`. You can optionally provide a `--dataDir` argument that will be used to store the homie data. By default, this directory is `<home directory>/.homie`.
+Start homie by calling `homie`. You can optionally provide a `--dataDir` argument that will be used to store the homie data. By default, this directory is `<home directory>/.homie`. You can also configure the HTTP server serving the UI with `--uiPort`, defaults to 80.
 
 ### Configuration
 
 Three files define the behaviour of homie, and are all contained in the data directory:
 
-1. The `config.json` file. It will contain some configuration like for example wheter you use metric or imperial units. Empty for now.
+1. The `config.json` file. It will contain some configuration like for example whether you use metric or imperial units. Empty for now.
 
 2. The `infrastructure.json` file. This file contains the representation of your homie devices. You can also group devices there.
 

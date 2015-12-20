@@ -52,7 +52,7 @@ let fail = (message) => {
 };
 
 try {
-  fs.accessSync(dataDir, fs.R_OK | fs.W_OK);
+  fs.accessSync(path.join(dataDir, '..'), fs.R_OK | fs.W_OK);
 } catch (err) {
   fail(`Cannot access dataDir ${dataDir}`);
 }
