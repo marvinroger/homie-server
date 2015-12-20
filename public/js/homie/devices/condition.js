@@ -10,7 +10,7 @@ export default class Condition extends React.Component {
   }
 
   render () {
-    let conditionText = undefined;
+    let conditionText;
     switch (this.props.state.condition) {
       case 'clear-day':
         conditionText = 'Jour clair';
