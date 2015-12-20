@@ -74,7 +74,7 @@ let mkjsonIfNotExisting = (path, object) => {
 };
 
 mkdirIfNotExisting(dataDir);
-mkjsonIfNotExisting(path.join(dataDir, '/infrastructure.json'), { devices: [] });
+mkjsonIfNotExisting(path.join(dataDir, '/infrastructure.json'), { devices: [], groups: [] });
 mkjsonIfNotExisting(path.join(dataDir, '/config.json'), { });
 mkdirIfNotExisting(path.join(dataDir, '/ota'));
 mkjsonIfNotExisting(path.join(dataDir, '/ota/manifest.json'), { firmwares: [] });
