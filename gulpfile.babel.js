@@ -65,7 +65,7 @@ gulp.task('npm-dist', ['npm-dist:clean', 'es6-7'], function () {
   let clientjs = gulp.src('./public/js/{bundle.min.js,bundle.min.js.map}', { base: './' })
     .pipe(gulp.dest('./dist'));
 
-  let json = gulp.src('./lib/**/*.json', { base: './' })
+  let misc = gulp.src('./misc/**/*', { base: './' })
     .pipe(gulp.dest('./dist'));
 
   let root = gulp.src(['./README.md', './LICENSE'])
@@ -80,5 +80,5 @@ gulp.task('npm-dist', ['npm-dist:clean', 'es6-7'], function () {
     }))
     .pipe(gulp.dest('./dist'));
 
-  return merge(js, publ, clientjs, json, root, pkg);
+  return merge(js, publ, clientjs, misc, root, pkg);
 });
