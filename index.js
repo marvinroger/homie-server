@@ -31,6 +31,10 @@ websocket.on('connection', function (socket) {
   });
 });
 
+// OTA
+
+import {} from './lib/ota';
+
 // Static HTTP server
 
 app.use(express.static(__dirname + '/public'));

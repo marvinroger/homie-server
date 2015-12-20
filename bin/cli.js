@@ -79,6 +79,7 @@ mkjsonIfNotExisting(path.join(dataDir, '/config.json'), { });
 mkdirIfNotExisting(path.join(dataDir, '/ota'));
 mkjsonIfNotExisting(path.join(dataDir, '/ota/manifest.json'), { firmwares: [] });
 mkdirIfNotExisting(path.join(dataDir, '/ota/bin'));
+mkdirIfNotExisting(path.join(dataDir, '/db'));
 
 var infrastructure = require(path.join(dataDir, '/infrastructure.json'));
 if (!dataValidator.validateInfrastructure(infrastructure)) {
