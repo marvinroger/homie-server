@@ -9,6 +9,8 @@ import fs from 'fs';
 import clor from 'clor';
 import yargs from 'yargs';
 
+import log from '../lib/log';
+import dataValidator from '../lib/datadir-validator';
 import pkg from '../package';
 import config from '../lib/config';
 
@@ -71,6 +73,12 @@ mkjsonIfNotExisting(path.join(dataDir, '/config.json'), { });
 mkdirIfNotExisting(path.join(dataDir, '/ota'));
 mkjsonIfNotExisting(path.join(dataDir, '/ota/manifest.json'), { firmwares: [] });
 mkdirIfNotExisting(path.join(dataDir, '/ota/bin'));
+
+var infrastructure = require(path.join(dataDir, '/infrastructure.json'));
+if (!dataValidator.validateInfrastructure(infrastructure)) {
+  log.fatal('infrastructure.json is invalid');
+  process.exit(1);
+}
 
 config.dataDir = dataDir;
 require('../index');

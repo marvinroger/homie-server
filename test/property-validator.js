@@ -4,8 +4,6 @@ import test from 'tape';
 import validator from '../lib/property-validator';
 
 test('PropertyValidator.canReceive', function (t) {
-  t.plan(14);
-
   // non-existent type
   t.equal(validator.canReceive('foobar', 'level', '100'), false);
   // non-existent property
@@ -30,21 +28,21 @@ test('PropertyValidator.canReceive', function (t) {
   t.equal(validator.canReceive('heater', 'mode', 'comfort'), true);
   t.equal(validator.canReceive('heater', 'mode', 'notamode'), false);
   t.equal(validator.canReceive('heater', 'mode', '12'), false);
+
+  t.end();
 });
 
 test('PropertyValidator.canSend', function (t) {
-  t.plan(2);
-
   // not settable
   t.equal(validator.canSend('temperature', 'temperature', '12'), false);
 
   // settable
   t.equal(validator.canSend('light', 'on', 'true'), true);
+
+  t.end();
 });
 
 test('PropertyValidator.convertValue', function (t) {
-  t.plan(9);
-
   // non-existent type
   t.deepEqual(validator.convertValue('foobar', 'level', '100'), undefined);
   // non-existent property
@@ -66,4 +64,6 @@ test('PropertyValidator.convertValue', function (t) {
 
   // test enum
   t.deepEqual(validator.convertValue('heater', 'mode', 'comfort'), 'comfort');
+
+  t.end();
 });
