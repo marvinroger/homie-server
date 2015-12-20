@@ -4,7 +4,7 @@
   "description": "Server-part of homie, an opiniated home automation system using MQTT",
   "main": "index.js",
   "scripts": {
-    "start": "babel-node ./bin/cli.js --uiPort 3000 | bunyan",
+    "start": "babel-node ./bin/cli.js --uiPort 3000",
     "test": "semistandard | snazzy && babel-tape-runner ./test/**/*.js | tap-spec",
     "dev": "gulp",
     "npm-dist": "gulp npm-dist"
@@ -39,7 +39,6 @@
     "aedes": "^0.11.1",
     "babel-runtime": "^6.3.19",
     "bluebird": "^3.0.5",
-    "bunyan": "^1.5.1",
     "chokidar": "^1.3.0",
     "clor": "^2.0.0",
     "express": "^4.13.3",
@@ -50,6 +49,7 @@
     "nedb": "^1.5.0",
     "socket.io": "^1.3.7",
     "validator": "^4.3.0",
+    "winston": "^2.1.1",
     "yargs": "^3.30.0"
   },
   "devDependencies": {
