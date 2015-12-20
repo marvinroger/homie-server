@@ -18,8 +18,20 @@ let argv = yargs
   .usage('Usage: $0')
   .default('dataDir', () => {
     return null;
+  }).default('uiPort', () => {
+    return null;
   })
   .argv;
+
+let dataDir = argv.dataDir;
+if (dataDir === null) {
+  dataDir = path.join(os.homedir(), '/.homie');
+}
+
+let uiPort = argv.uiPort;
+if (!Number.isInteger(uiPort) || uiPort < 1 || uiPort > 65535) {
+  uiPort = 80;
+}
 
 let homieStyled = clor.magenta(`\
   _ _              _
@@ -38,12 +50,6 @@ let fail = (message) => {
   console.log(`${clor.red('error:')} ${message}`);
   process.exit(1);
 };
-
-let dataDir = argv.dataDir;
-
-if (dataDir === null) {
-  dataDir = path.join(os.homedir(), '/.homie');
-}
 
 try {
   fs.accessSync(dataDir, fs.R_OK | fs.W_OK);
@@ -81,4 +87,5 @@ if (!dataValidator.validateInfrastructure(infrastructure)) {
 }
 
 config.dataDir = dataDir;
+config.uiPort = uiPort;
 require('../index');

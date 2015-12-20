@@ -4,7 +4,7 @@ RUN npm install -g homie-server
 
 RUN mkdir /data
 
-EXPOSE 3000
+EXPOSE 80 35589
 
 VOLUME /data
 

@@ -4,7 +4,7 @@
   "description": "Server-part of homie, an opiniated home automation system using MQTT",
   "main": "index.js",
   "scripts": {
-    "start": "babel-node ./bin/cli.js | bunyan",
+    "start": "babel-node ./bin/cli.js --uiPort 3000 | bunyan",
     "test": "semistandard | snazzy && babel-tape-runner ./test/**/*.js | tap-spec",
     "dev": "gulp",
     "npm-dist": "gulp npm-dist"

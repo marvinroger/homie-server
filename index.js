@@ -4,6 +4,7 @@ import {createServer} from 'http';
 import express from 'express';
 import socketIo from 'socket.io';
 
+import config from './lib/config';
 import log from './lib/log';
 import infrastructure from './lib/infrastructure';
 import ota from './lib/ota';
@@ -41,10 +42,11 @@ app.get('*', function (req, res) {
   res.sendFile(__dirname + '/public/index.html');
 });
 
-server.listen(3000, function () {
+server.listen(config.uiPort, function () {
   let host = server.address().address;
   let port = server.address().port;
   log.info(`HTTP server listening on ${host}:${port}`);
 }).on('error', function (err) {
-  log.fatal(err);
+  log.fatal('HTTP server cannot listen', err);
+  process.exit(1);
 });
