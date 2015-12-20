@@ -1,4 +1,6 @@
 node_modules/
 dist/
+public/js/bundle.min.js
+public/js/bundle.min.js.map
 
 npm-debug.log
