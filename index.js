@@ -1,24 +1,26 @@
 'use strict';
 
+import {createServer} from 'http';
 import express from 'express';
+import socketIo from 'socket.io';
 
 import log from './lib/log';
 import infrastructure from './lib/infrastructure';
 import ota from './lib/ota';
 
 let app = express();
-let server = require('http').createServer(app);
-let socketIo = require('socket.io')(server);
+let server = createServer(app);
+let websocket = socketIo(server);
 
 // Watch for infrastructure changes and send to Websocket
 
 infrastructure.on('update', function (patch) {
-  socketIo.emit('infrastructure_updated', patch);
+  websocket.emit('infrastructure_updated', patch);
 });
 
 // WebSocket connect handler
 
-socketIo.on('connection', function (socket) {
+websocket.on('connection', function (socket) {
   socket.emit('infrastructure', {
     devices: infrastructure.getRepresentation().devices,
     groups: infrastructure.getRepresentation().groups

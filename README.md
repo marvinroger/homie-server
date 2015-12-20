@@ -77,4 +77,4 @@ Three files define the behaviour of homie, and are all contained in the data dir
 }
 ```
 
-This manifest file assumes the firmware file is stored in `ota/bin/Marvin_s_Room.bin`.
+This manifest needs a firmware to be stored in `ota/bin/Marvin_s_Room.bin`, else OTA won't be handled. You can update the manifest while homie is running, it will be hot-loaded.
