@@ -72,7 +72,7 @@ export default class Device extends React.Component {
 
 Device.propTypes = {
   type: React.PropTypes.string.isRequired,
-  image: React.PropTypes.oneOfType([ React.PropTypes.string, React.PropTypes.number ]).isRequired,
+  image: React.PropTypes.oneOfType([ React.PropTypes.string, React.PropTypes.number ]),
   color: React.PropTypes.string.isRequired,
   name: React.PropTypes.string.isRequired,
   location: React.PropTypes.string.isRequired,

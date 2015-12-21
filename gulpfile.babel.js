@@ -11,6 +11,7 @@ import notifier from 'node-notifier';
 import sourcemaps from 'gulp-sourcemaps';
 import uglify from 'gulp-uglify';
 import browserify from 'browserify';
+import envify from 'envify/custom';
 import babelify from 'babelify';
 import source from 'vinyl-source-stream'; // helper for browserify text stream to gulp pipeline
 import buffer from 'vinyl-buffer'; // helper for browserify
@@ -25,16 +26,33 @@ let errorHandler = function (task) {
   };
 };
 
-gulp.task('default', ['es6-7'], function (done) {
+gulp.task('default', ['es6-7:dev'], function (done) {
   watch('./public/**/!(bundle).js', function (vinyl) {
     console.log(`${vinyl.path} was '${vinyl.event}', running es6-7...`);
-    runSequence('es6-7');
+    runSequence('es6-7:dev');
   });
 });
 
-gulp.task('es6-7', function () {
+let es67 = () => {
   return browserify('./public/js/app.js')
-    .transform(babelify.configure({ presets: ['es2015', 'stage-3', 'react'] }))
+    .transform(babelify.configure({ presets: ['es2015', 'stage-3', 'react'] }));
+};
+
+gulp.task('es6-7:dev', function () {
+  return es67()
+    .bundle()
+    .on('error', function (error) {
+      errorHandler('es6-7')(error);
+      this.emit('end');
+    }) // Don't crash if failed, plumber alone doesn't work with browserify
+    .pipe(source('bundle.min.js'))
+    .pipe(buffer())
+    .pipe(gulp.dest('./public/js'));
+});
+
+gulp.task('es6-7:dist', function () {
+  return es67()
+    .transform(envify({ NODE_ENV: 'production' }), { global: true }) // global: act on node_modules (here react prod mode)
     .bundle()
     .on('error', function (error) {
       errorHandler('es6-7')(error);
@@ -54,7 +72,7 @@ gulp.task('npm-dist:clean', function (done) {
   });
 });
 
-gulp.task('npm-dist', ['npm-dist:clean', 'es6-7'], function () {
+gulp.task('npm-dist', ['npm-dist:clean', 'es6-7:dist'], function () {
   let js = gulp.src(['./index.js', './{bin,lib}/**/*.js'], { base: './' })
     .pipe(babel({ 'plugins': ['transform-runtime'] }))
     .pipe(gulp.dest('./dist'));
