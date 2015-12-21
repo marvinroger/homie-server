@@ -15,7 +15,7 @@ export default class Heater extends React.Component {
 
   render () {
     return (
-      <Device image={this.props.state.mode} color='#1abc9c' {...this.props}>
+      <Device image={this.props.state.mode} color='#1abc9c' ref='device' {...this.props}>
         <div className='ui four buttons'>
           <button className='ui blue basic icon compact button' onClick={() => this.toggle('anti-freeze')}>
             <i className='asterisk icon'></i>

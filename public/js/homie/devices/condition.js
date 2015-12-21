@@ -28,7 +28,7 @@ export default class Condition extends React.Component {
         conditionText = 'Neige fondue';
         break;
       case 'wind':
-        conditionText = 'Vent';
+        conditionText = 'Venteux';
         break;
       case 'fog':
         conditionText = 'Brouillard';
