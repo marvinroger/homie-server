@@ -58,7 +58,7 @@ export default class Device extends React.Component {
             <a className='header'>{ this.props.name }</a>
             <a className={signalLabelClasses} data-html={tooltipHtml} data-variation='inverted' data-position='left center'><i className='wifi icon' style={{marginRight: 0}}/></a>
             <div className='meta'>
-              <span className='group'>{ this.props.location }</span>
+              <i className='marker icon'></i><span className='group'>{ this.props.location }</span>
             </div>
           </div>
           <div className='extra content'>

@@ -45,15 +45,19 @@ export default class Menu extends React.Component {
 
     return (
       <div>
-        <div className='ui text menu'>
-          <div className='item'>
-            <img className='logo' src='img/logo.png'/>
-            Homie
+        <div className='ui centered grid'>
+          <div className='center aligned column'>
+            <div className='ui compact text menu'>
+              <div className='item'>
+                <img className='logo' src='img/logo.png'/>
+                Homie
+              </div>
+            </div>
           </div>
         </div>
 
-        <div className='ui dropdown'>
-          {this.state.active.name} <i className='dropdown icon'></i>
+        <div className='ui dropdown floating labeled icon button'>
+          {this.state.active.name} <i className='filter icon'></i>
           <div className='menu'>
             {groups}
           </div>
