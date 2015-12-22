@@ -38,14 +38,14 @@ class App extends React.Component {
     this.unsubscribe();
   }
 
-  onGroupChange (id) {
-    if (id === 'all') {
+  onGroupChange (group) {
+    if (group.id === 'all') {
       this.setState({ devicesShown: 'all' });
     } else {
-      let group = this.state.groups.filter((testedGroup) => {
-        return testedGroup.id === id;
+      let groupWithDevices = this.state.groups.filter((testedGroup) => {
+        return testedGroup.id === group.id;
       });
-      let devicesShown = group[0].devices;
+      let devicesShown = groupWithDevices[0].devices;
       this.setState({ devicesShown: devicesShown });
     }
   }

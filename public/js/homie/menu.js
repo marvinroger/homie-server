@@ -1,3 +1,5 @@
+/* global $ */
+
 'use strict';
 
 import React from 'react';
@@ -7,13 +9,21 @@ export default class Menu extends React.Component {
   constructor (props) {
     super(props);
     this.state = {
-      active: 'all'
+      active: { id: 'all', name: 'Tout' }
     };
   }
 
-  onMenuChange (id) {
-    this.props.onMenuChange(id);
-    this.setState({ active: id });
+  componentDidMount () {
+    $('.ui.dropdown').dropdown();
+  }
+
+  componentDidUpdate () {
+    $('.ui.dropdown').dropdown();
+  }
+
+  onMenuChange (group) {
+    this.props.onMenuChange(group);
+    this.setState({ active: group });
   }
 
   render () {
@@ -23,24 +33,32 @@ export default class Menu extends React.Component {
     let groups = groupsWithAll.map((group, index) => {
       let itemClasses = classNames({
         'item': true,
-        'active': this.state.active === group.id
+        'active': this.state.active.id === group.id
       });
 
       return (
-        <a className={ itemClasses } onClick={() => this.onMenuChange(group.id)} key={index}>
+        <a className={ itemClasses } onClick={() => this.onMenuChange(group)} key={index}>
           {group.name}
         </a>
       );
     });
 
     return (
-      <div className='ui text menu'>
-        <div className='item'>
-          <img className='logo' src='img/logo.png'/>
-          Homie
+      <div>
+        <div className='ui text menu'>
+          <div className='item'>
+            <img className='logo' src='img/logo.png'/>
+            Homie
+          </div>
         </div>
 
-        {groups}
+        <div className='ui dropdown'>
+          {this.state.active.name} <i className='dropdown icon'></i>
+          <div className='menu'>
+            {groups}
+          </div>
+        </div>
+        <br/><br/>
       </div>
     );
   }
