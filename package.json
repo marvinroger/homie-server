@@ -86,10 +86,14 @@
     "snazzy": "^2.0.1",
     "socket.io-client": "^1.3.7",
     "tap-spec": "^4.1.1",
+    "tape": "^4.3.0",
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0"
   },
   "semistandard": {
-    "parser": "babel-eslint"
+    "parser": "babel-eslint",
+    "ignore": [
+      "/public/3rd/"
+    ]
   }
 }
