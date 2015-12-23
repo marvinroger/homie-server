@@ -47,7 +47,7 @@ console.log(`${clor.magenta(`Homie server IP is ${clor.bold.underline(`${ip.v4()
 console.log(`${clor.magenta("In order for your homie devices to function well, \nmake sure this IP won't change over time.")}\n`);
 
 let fail = (message) => {
-  console.log(`${clor.red('error:')} ${message}`);
+  log.fatal(message);
   process.exit(1);
 };
 
@@ -83,8 +83,7 @@ mkdirIfNotExisting(path.join(dataDir, '/db'));
 
 var infrastructure = require(path.join(dataDir, '/infrastructure.json'));
 if (!dataValidator.validateInfrastructure(infrastructure)) {
-  log.fatal('infrastructure.json is invalid');
-  process.exit(1);
+  fail('infrastructure.json is invalid');
 }
 
 config.dataDir = dataDir;
