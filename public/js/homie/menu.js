@@ -83,6 +83,7 @@ export default class Menu extends React.Component {
 }
 
 Menu.propTypes = {
+  connection: React.PropTypes.bool.isRequired,
   groups: React.PropTypes.array.isRequired,
   onMenuChange: React.PropTypes.func.isRequired
 };

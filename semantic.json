@@ -1,0 +1,46 @@
+{
+  "base": "public/3rd/semantic",
+  "paths": {
+    "source": {
+      "config": "src/theme.config",
+      "definitions": "src/definitions/",
+      "site": "src/site/",
+      "themes": "src/themes/"
+    },
+    "output": {
+      "packaged": "dist/",
+      "uncompressed": "dist/components/",
+      "compressed": "dist/components/",
+      "themes": "dist/themes/"
+    },
+    "clean": "dist/"
+  },
+  "permission": false,
+  "rtl": "No",
+  "components": [
+    "reset",
+    "site",
+    "button",
+    "container",
+    "divider",
+    "header",
+    "icon",
+    "image",
+    "input",
+    "label",
+    "list",
+    "loader",
+    "grid",
+    "menu",
+    "message",
+    "card",
+    "statistic",
+    "dimmer",
+    "dropdown",
+    "popup",
+    "transition",
+    "state",
+    "visibility"
+  ],
+  "version": "2.1.7"
+}

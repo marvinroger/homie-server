@@ -1,13 +1,5 @@
 CACHE MANIFEST
 
-CACHE
-img/logo.png
-img/favicon-192x192.png
-img/favicon-32x32.png
-img/favicon-16x16.png
-3rd/semantic/semantic.min.css
-manifest.json
-
 FALLBACK:
 / offline.html
 index.html offline.html
