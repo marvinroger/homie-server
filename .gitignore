@@ -1,4 +1,5 @@
 /dist/
+/coverage/
 /public/js/bundle.min.js
 /public/js/bundle.min.js.map
 /public/3rd/semantic/dist/*
