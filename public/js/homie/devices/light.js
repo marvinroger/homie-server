@@ -20,7 +20,6 @@ export default class Light extends React.Component {
           <button className='ui green compact button' onClick={() => this.toggle('true')}>
             ON
           </button>
-          <div className='or' data-text='ou'></div>
           <button className='ui red compact button' onClick={() => this.toggle('false')}>
             OFF
           </button>

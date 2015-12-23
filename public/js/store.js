@@ -1,21 +1,28 @@
 'use strict';
 
+import immutable from 'immutable';
+
 import { createStore } from 'redux';
 import socketio from 'socket.io-client';
-import jsonpatch from 'fast-json-patch';
+import immpatch from 'immpatch';
 
 const INITIAL = 'INITIAL';
 const PATCH = 'PATCH';
 const SET_PROPERTY = 'SET_PROPERTY';
 
-function infrastructure (state = { devices: [], groups: [], loading: true }, action) {
+let immutableState = immutable.Map({
+  devices: [], groups: [], loading: true
+});
+
+function infrastructure (state = immutableState.toJS(), action) {
   switch (action.type) {
     case INITIAL:
-      action.initial.loading = false;
-      return action.initial;
+      immutableState = immutableState.set('loading', false);
+      immutableState = immutableState.mergeDeep(action.initial);
+      return immutableState.toJS();
     case PATCH:
-      jsonpatch.apply(state, action.patch);
-      return state;
+      immutableState = immpatch(immutableState, action.patch);
+      return immutableState.toJS();
     case SET_PROPERTY:
       socket.emit('set_property', action.property);
       return state;

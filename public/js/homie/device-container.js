@@ -22,7 +22,7 @@ export default class DeviceContainer extends React.Component {
   }
 
   render () {
-    if (!this.props.devices) {
+    if (!this.props.devices.length) {
       return (
         <div>Aucun objet</div>
       );

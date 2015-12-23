@@ -14,6 +14,8 @@ import DeviceContainer from './homie/device-container';
   devices: state.devices,
   groups: state.groups,
   loading: state.loading
+}), (dispatch) => ({
+  setProperty: (property) => dispatch(setProperty(property))
 }))
 class App extends React.Component {
   constructor (props) {
@@ -50,7 +52,7 @@ class App extends React.Component {
 
         <div className='ui main container'>
           <Menu groups={this.props.groups} onMenuChange={this.onGroupChange.bind(this)} />
-          <DeviceContainer devicesShown={this.state.devicesShown} devices={this.props.devices} setProperty={(property) => store.dispatch(setProperty(property))} />
+          <DeviceContainer devicesShown={this.state.devicesShown} devices={this.props.devices} setProperty={this.props.setProperty} />
         </div>
       </div>
     );
@@ -67,5 +69,6 @@ ReactDOM.render(
 App.propTypes = {
   loading: React.PropTypes.bool.isRequired,
   devices: React.PropTypes.array.isRequired,
-  groups: React.PropTypes.array.isRequired
+  groups: React.PropTypes.array.isRequired,
+  setProperty: React.PropTypes.func.isRequired
 };
