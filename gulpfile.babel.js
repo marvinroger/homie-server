@@ -35,7 +35,7 @@ gulp.task('default', ['es6-7:dev'], function (done) {
 
 let es67 = () => {
   return browserify('./public/js/app.js')
-    .transform(babelify.configure({ presets: ['es2015', 'stage-3', 'react'] }));
+    .transform(babelify.configure({ presets: ['es2015', 'stage-3', 'react'], plugins: ['transform-decorators-legacy'] }));
 };
 
 gulp.task('es6-7:dev', function () {

@@ -6,15 +6,13 @@ import React from 'react';
 
 import classNames from 'classnames';
 
-import InfrastructureActions from '../infrastructure-actions';
-
 export default class Device extends React.Component {
   constructor (props) {
     super(props);
   }
 
   setProperty (name, value) {
-    InfrastructureActions.setProperty({
+    this.props.setProperty({
       deviceId: this.props.deviceId,
       nodeId: this.props.nodeId,
       property: name,
@@ -83,5 +81,6 @@ Device.propTypes = {
     online: React.PropTypes.bool.isRequired,
     localip: React.PropTypes.string,
     version: React.PropTypes.version
-  }).isRequired
+  }).isRequired,
+  setProperty: React.PropTypes.func.isRequired
 };

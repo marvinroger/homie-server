@@ -4,45 +4,30 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import classNames from 'classnames';
 
-import InfrastructureStore from './infrastructure-store';
-import InfrastructureActions from './infrastructure-actions';
+import { Provider, connect } from 'react-redux';
+import store, {setProperty} from './store';
 
 import Menu from './homie/menu';
 import DeviceContainer from './homie/device-container';
 
+@connect(state => ({
+  devices: state.devices,
+  groups: state.groups,
+  loading: state.loading
+}))
 class App extends React.Component {
   constructor (props) {
     super(props);
     this.state = {
-      loading: true,
-      devices: [],
-      groups: [],
       devicesShown: 'all'
     };
-  }
-
-  onInfrastructureChange (infrastructure) {
-    this.setState({
-      loading: false,
-      devices: infrastructure.devices,
-      groups: infrastructure.groups
-    });
-  }
-
-  componentDidMount () {
-    InfrastructureActions.getInfrastructure();
-    this.unsubscribe = InfrastructureStore.listen((data) => this.onInfrastructureChange(data));
-  }
-
-  componentWillUnmount () {
-    this.unsubscribe();
   }
 
   onGroupChange (group) {
     if (group.id === 'all') {
       this.setState({ devicesShown: 'all' });
     } else {
-      let groupWithDevices = this.state.groups.filter((testedGroup) => {
+      let groupWithDevices = this.props.groups.filter((testedGroup) => {
         return testedGroup.id === group.id;
       });
       let devicesShown = groupWithDevices[0].devices;
@@ -64,12 +49,23 @@ class App extends React.Component {
         </div>
 
         <div className='ui main container'>
-          <Menu groups={this.state.groups} onMenuChange={this.onGroupChange.bind(this)} />
-          <DeviceContainer devicesShown={this.state.devicesShown} devices={this.state.devices} />
+          <Menu groups={this.props.groups} onMenuChange={this.onGroupChange.bind(this)} />
+          <DeviceContainer devicesShown={this.state.devicesShown} devices={this.props.devices} setProperty={(property) => store.dispatch(setProperty(property))} />
         </div>
       </div>
     );
   }
 }
 
-ReactDOM.render(<App/>, document.getElementById('app'));
+ReactDOM.render(
+  <Provider store={store}>
+    <App/>
+  </Provider>,
+  document.getElementById('app')
+);
+
+App.propTypes = {
+  loading: React.PropTypes.bool.isRequired,
+  devices: React.PropTypes.array.isRequired,
+  groups: React.PropTypes.array.isRequired
+};

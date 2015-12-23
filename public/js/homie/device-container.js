@@ -34,9 +34,9 @@ export default class DeviceContainer extends React.Component {
         return;
       }
 
-      device.nodes.map(function (node, nodeIndex) {
+      device.nodes.map((node, nodeIndex) => {
         let Node = Nodes[node.type];
-        nodes.push(<Node name={node.name} type={node.type} state={node.state} deviceId={device.id} nodeId={node.id} deviceState={device.state} location={device.location} key={deviceIndex + '-' + nodeIndex} />);
+        nodes.push(<Node name={node.name} type={node.type} state={node.state} deviceId={device.id} nodeId={node.id} deviceState={device.state} location={device.location} setProperty={this.props.setProperty} key={deviceIndex + '-' + nodeIndex} />);
       });
     });
 
@@ -50,5 +50,6 @@ export default class DeviceContainer extends React.Component {
 
 DeviceContainer.propTypes = {
   devices: React.PropTypes.array.isRequired,
-  devicesShown: React.PropTypes.oneOfType([ React.PropTypes.array, React.PropTypes.string ]).isRequired
+  devicesShown: React.PropTypes.oneOfType([ React.PropTypes.array, React.PropTypes.string ]).isRequired,
+  setProperty: React.PropTypes.func.isRequired
 };
