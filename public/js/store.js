@@ -17,7 +17,6 @@ function infrastructure (state = { devices: [], groups: [], loading: true }, act
       jsonpatch.apply(state, action.patch);
       return state;
     case SET_PROPERTY:
-      console.log(action.property);
       socket.emit('set_property', action.property);
       return state;
     default:
