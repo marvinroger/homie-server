@@ -13,7 +13,8 @@ import DeviceContainer from './homie/device-container';
 @connect(state => ({
   devices: state.devices,
   groups: state.groups,
-  loading: state.loading
+  loading: state.loading,
+  connection: state.connection
 }), (dispatch) => ({
   setProperty: (property) => dispatch(setProperty(property))
 }))
@@ -41,7 +42,7 @@ class App extends React.Component {
     let dimmerClasses = classNames({
       'ui': true,
       'dimmer': true,
-      'active': this.state.loading
+      'active': this.props.loading
     });
 
     return (
@@ -51,7 +52,7 @@ class App extends React.Component {
         </div>
 
         <div className='ui main container'>
-          <Menu groups={this.props.groups} onMenuChange={this.onGroupChange.bind(this)} />
+          <Menu groups={this.props.groups} connection={this.props.connection} onMenuChange={this.onGroupChange.bind(this)} />
           <DeviceContainer devicesShown={this.state.devicesShown} devices={this.props.devices} setProperty={this.props.setProperty} />
         </div>
       </div>
@@ -70,5 +71,6 @@ App.propTypes = {
   loading: React.PropTypes.bool.isRequired,
   devices: React.PropTypes.array.isRequired,
   groups: React.PropTypes.array.isRequired,
+  connection: React.PropTypes.bool.isRequired,
   setProperty: React.PropTypes.func.isRequired
 };

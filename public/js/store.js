@@ -6,16 +6,20 @@ import { createStore } from 'redux';
 import socketio from 'socket.io-client';
 import immpatch from 'immpatch';
 
+const SET_CONNECTION = 'SET_CONNECTION';
 const INITIAL = 'INITIAL';
 const PATCH = 'PATCH';
 const SET_PROPERTY = 'SET_PROPERTY';
 
 let immutableState = immutable.Map({
-  devices: [], groups: [], loading: true
+  devices: [], groups: [], loading: true, connection: true
 });
 
 function infrastructure (state = immutableState.toJS(), action) {
   switch (action.type) {
+    case SET_CONNECTION:
+      immutableState = immutableState.set('connection', action.connection);
+      return immutableState.toJS();
     case INITIAL:
       immutableState = immutableState.set('loading', false);
       immutableState = immutableState.mergeDeep(action.initial);
@@ -34,7 +38,15 @@ function infrastructure (state = immutableState.toJS(), action) {
 let store = createStore(infrastructure);
 let socket = socketio();
 
-socket.once('infrastructure', (data) => {
+socket.on('connect', () => {
+  store.dispatch({ type: SET_CONNECTION, connection: true });
+});
+
+socket.on('disconnect', () => {
+  store.dispatch({ type: SET_CONNECTION, connection: false });
+});
+
+socket.on('infrastructure', (data) => {
   store.dispatch({ type: INITIAL, initial: data });
 });
 
