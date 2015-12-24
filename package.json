@@ -1,7 +1,7 @@
 {
   "name": "homie-server",
   "version": "0.1.8",
-  "description": "Server-part of homie, an opiniated home automation system using MQTT",
+  "description": "Server-part of Homie, an opinionated home automation system using MQTT",
   "main": "index.js",
   "scripts": {
     "start": "babel-node ./bin/cli.js --uiPort 3000",
