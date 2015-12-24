@@ -1,30 +1,32 @@
 Homie server
 ============
 
-[![npm version](https://img.shields.io/npm/v/homie-server.svg)](https://www.npmjs.com/package/homie-server) [![Travis CI](https://img.shields.io/travis/marvinroger/homie-server.svg)](https://travis-ci.org/marvinroger/homie-server) [![Coveralls](https://img.shields.io/coveralls/marvinroger/homie-server.svg)](https://coveralls.io/r/marvinroger/homie-server) [![Dependency Status](https://david-dm.org/marvinroger/homie-server.svg?style=flat)](https://david-dm.org/marvinroger/homie-server) [![devDependency Status](https://david-dm.org/marvinroger/homie-server/dev-status.svg?style=flat)](https://david-dm.org/marvinroger/homie-server#info=devDependencies)
+[![npm version](https://img.shields.io/npm/v/homie-server.svg)](https://www.npmjs.com/package/homie-server) [![Travis CI](https://img.shields.io/travis/marvinroger/homie-server.svg)](https://travis-ci.org/marvinroger/homie-server) [![Coveralls](https://img.shields.io/coveralls/marvinroger/homie-server.svg)](https://coveralls.io/r/marvinroger/homie-server) (broken) [![Dependency Status](https://david-dm.org/marvinroger/homie-server.svg?style=flat)](https://david-dm.org/marvinroger/homie-server) [![devDependency Status](https://david-dm.org/marvinroger/homie-server/dev-status.svg?style=flat)](https://david-dm.org/marvinroger/homie-server#info=devDependencies)
 
-Server of homie, an opiniated home automation system using MQTT. The project is currently in alpha.
+Server of Homie, an opinionated home automation system using MQTT. The project is currently in alpha.
 
-![homie server screenshot](screenshot.png)
+![Homie server screenshot](screenshot.png)
 
 ## Features
 
+* Simple but efficient dashboard
 * OTA updates
-* Dashboard
 
-## Usage
+## Installation
 
 `npm install -g homie-server`
 
-Start homie by calling `homie`. You can optionally provide a `--dataDir` argument that will be used to store the homie data. By default, this directory is `<home directory>/.homie`. You can also configure the HTTP server serving the UI with `--uiPort`, defaults to 80.
+## Usage
+
+The Homie server can only be started using the CLI interface. Start Homie by calling `homie`. You can optionally provide a `--dataDir` argument that will be used to store the Homie data. By default, this directory is located at `<home directory>/.homie`. You can also configure the HTTP server serving the UI with `--uiPort`, else it defaults to 80.
 
 ### Configuration
 
-Three files define the behaviour of homie, and are all contained in the data directory:
+Three files define the behavior of Homie, and are all contained in the data directory:
 
 1. The `config.json` file. It will contain some configuration like for example whether you use metric or imperial units. Empty for now.
 
-2. The `infrastructure.json` file. This file contains the representation of your homie devices. You can also group devices there.
+2. The `infrastructure.json` file. This file contains the representation of your Homie devices. You can also group devices there.
 
 ```json
 {
@@ -75,4 +77,4 @@ Three files define the behaviour of homie, and are all contained in the data dir
 }
 ```
 
-This manifest needs a firmware to be stored in `ota/bin/Marvin_s_Room.bin`, else OTA won't be handled. You can update the manifest while homie is running, it will be hot-loaded.
+This manifest needs a firmware to be stored in `ota/bin/Marvin_s_Room.bin`, else OTA won't be handled. You can update the manifest while Homie is running, it will be hot-loaded.
