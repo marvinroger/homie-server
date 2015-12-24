@@ -38,13 +38,16 @@ let homieStyled = clor.magenta(`\
  | | | ___ ._ _ _ <_> ___
  |   |/ . \\| ' ' || |/ ._>
  |_|_|\\___/|_|_|_||_|\\___.
-`).string;
+`).toString();
 
 console.log(homieStyled);
-console.log(`${clor.magenta(`Version ${clor.bold(`${pkg.version}`)}`)}\n`);
+console.log(clor.magenta(`Version ${clor.bold(`${pkg.version}`)}\n`).toString());
 
-console.log(`${clor.magenta(`Homie server IP is ${clor.bold.underline(`${ip.v4()}`)}`)}`);
-console.log(`${clor.magenta("In order for your homie devices to function well, \nmake sure this IP won't change over time.")}\n`);
+console.log(clor.magenta(`Your data directory is ${clor.bold.underline(`${dataDir}`)}`).toString());
+console.log(clor.magenta(`See https://git.io/homie-server#configuration\n`).toString());
+
+console.log(clor.magenta(`Homie server IP is ${clor.bold.underline(`${ip.v4()}`)}`).toString());
+console.log(clor.magenta("Make sure this IP won't change over time.\n").toString());
 
 let fail = (message) => {
   log.fatal(message);
