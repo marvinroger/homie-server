@@ -47,7 +47,7 @@ console.log(clor.magenta(`Your data directory is ${clor.bold.underline(`${dataDi
 console.log(clor.magenta(`See https://git.io/homie-server#configuration\n`).toString());
 
 console.log(clor.magenta(`Homie server IP is ${clor.bold.underline(`${ip.v4()}`)}`).toString());
-console.log(clor.magenta("Make sure this IP won't change over time.\n").toString());
+console.log(clor.magenta("Make sure this IP won't change over time\n").toString());
 
 let fail = (message) => {
   log.fatal(message);
