@@ -71,6 +71,7 @@
     "classnames": "^2.2.1",
     "coveralls": "^2.11.6",
     "del": "^2.2.0",
+    "depcheck": "^0.5.11",
     "envify": "^3.4.0",
     "gulp": "^3.9.0",
     "gulp-babel": "^6.1.1",
@@ -102,7 +103,7 @@
   "semistandard": {
     "parser": "babel-eslint",
     "ignore": [
-      "/public/3rd/"
+      "/app/vendor/"
     ]
   }
 }
