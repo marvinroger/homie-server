@@ -78,3 +78,11 @@ Three files define the behavior of Homie, and are all contained in the data dire
 ```
 
 This manifest needs a firmware to be stored in `ota/bin/Marvin_s_Room.bin`, else OTA won't be handled. You can update the manifest while Homie is running, it will be hot-loaded.
+
+## Contribute
+
+Constributions are very welcome!
+
+To work/start the git Homie version, just run `npm run dev`.
+This will build the public directory, and watch for changes in the `app` folder.
+To start the server, run `npm start`. The GUI will be listening on port `3000`.

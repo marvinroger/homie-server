@@ -1,11 +1,9 @@
+/node_modules/
 /dist/
 /coverage/
-/public/js/bundle.min.js
-/public/js/bundle.min.js.map
-/public/3rd/semantic/dist/*
-!public/3rd/semantic/dist/semantic.min.css
-!public/3rd/semantic/dist/semantic.min.js
-
-node_modules/
+/public/
+/app/vendor/semantic/*
+!app/vendor/semantic/dist/semantic.min.css
+!app/vendor/semantic/dist/semantic.min.js
 
 npm-debug.log

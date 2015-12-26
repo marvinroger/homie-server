@@ -39,8 +39,12 @@ import {} from './lib/ota';
 
 app.use(express.static(__dirname + '/public'));
 
+app.get('/offline', function (req, res) {
+  res.sendFile(__dirname + '/views/offline.html');
+});
+
 app.get('*', function (req, res) {
-  res.sendFile(__dirname + '/public/index.html');
+  res.sendFile(__dirname + '/views/index.html');
 });
 
 server.listen(config.uiPort, function () {

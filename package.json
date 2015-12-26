@@ -5,11 +5,14 @@
   "main": "index.js",
   "scripts": {
     "start": "babel-node ./bin/cli.js --uiPort 3000",
-    "test": "semistandard | snazzy && NODE_ENV=test babel-node ./node_modules/.bin/tape ./test/**/*.js | tap-spec",
+    "test": "npm run test-standard && npm run test-deps && npm run test-tests",
+    "test-standard": "semistandard | snazzy",
+    "test-deps": "depcheck --ignore-dirs=dist,public --ignores=babel*,semantic-ui",
+    "test-tests": "NODE_ENV=test babel-node ./node_modules/.bin/tape ./test/**/*.js | tap-spec",
     "coverage": "NODE_ENV=test babel-node ./node_modules/.bin/isparta cover --report lcov ./test/*.js",
     "coveralls": "npm run coverage --silent && coveralls < ./coverage/lcov.info",
-    "dev": "gulp",
-    "npm-dist": "gulp npm-dist"
+    "dev": "gulp dev",
+    "dist": "gulp dist"
   },
   "bin": {
     "homie": "./bin/cli.js"
@@ -71,7 +74,10 @@
     "envify": "^3.4.0",
     "gulp": "^3.9.0",
     "gulp-babel": "^6.1.1",
+    "gulp-imagemin": "^2.4.0",
     "gulp-json-editor": "^2.2.1",
+    "gulp-newer": "^1.1.0",
+    "gulp-plumber": "^1.0.1",
     "gulp-sourcemaps": "^1.6.0",
     "gulp-uglify": "^1.5.1",
     "gulp-watch": "^4.3.5",
