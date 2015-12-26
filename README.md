@@ -11,6 +11,7 @@ Server of Homie, an opinionated home automation system using MQTT. The project i
 
 * Simple but efficient dashboard
 * OTA updates
+* Compatible starting with Node.js v0.12 (0.10 might work, but it is not CI-tested)
 
 ## Installation
 
