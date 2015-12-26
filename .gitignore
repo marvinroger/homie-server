@@ -2,7 +2,9 @@
 /dist/
 /coverage/
 /public/
+
 /app/vendor/semantic/*
+/app/vendor/semantic/dist/*
 !app/vendor/semantic/dist/semantic.min.css
 !app/vendor/semantic/dist/semantic.min.js
 
