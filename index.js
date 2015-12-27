@@ -1,57 +1,45 @@
 'use strict';
 
-import {createServer} from 'http';
-import express from 'express';
-import socketIo from 'socket.io';
+import _ from 'underscore';
 
-import config from './lib/config';
-import log from './lib/log';
+import homieServer from './lib/servers/homie';
+import guiServer from './lib/servers/gui';
+import otaServer from './lib/servers/ota';
 import infrastructure from './lib/infrastructure';
 
-let app = express();
-let server = createServer(app);
-let websocket = socketIo(server);
+import log from './lib/log';
 
-// Watch for infrastructure changes and send to Websocket
+const servers = [homieServer, guiServer, otaServer];
 
-infrastructure.on('update', function (patch) {
-  websocket.emit('infrastructure_updated', patch);
-});
+servers.forEach(function (server) {
+  server.start();
 
-// WebSocket connect handler
-
-websocket.on('connection', function (socket) {
-  socket.emit('infrastructure', {
-    devices: infrastructure.getRepresentation().devices,
-    groups: infrastructure.getRepresentation().groups
+  server.on('ready', function (data) {
+    log.info(`${server.getName()} server listening on ${data.host}:${data.port}`);
+    serversReady();
   });
 
-  socket.on('set_property', function (data) {
-    infrastructure.sendProperty(data);
+  server.on('error', function (err) {
+    log.fatal(`${server.getName()} server cannot listen`, err);
+    process.exit(1);
   });
 });
 
-// OTA
+let serversReady = _.after(servers.length, () => {
+  infrastructure.on('update', function (patch) {
+    guiServer.getWebsocket().emit('infrastructure_updated', patch);
+  });
 
-import {} from './lib/ota';
+  // WebSocket connect handler
 
-// Static HTTP server
+  guiServer.getWebsocket().on('connection', function (socket) {
+    socket.emit('infrastructure', {
+      devices: infrastructure.getRepresentation().devices,
+      groups: infrastructure.getRepresentation().groups
+    });
 
-app.use(express.static(__dirname + '/public'));
-
-app.get('/offline', function (req, res) {
-  res.sendFile(__dirname + '/views/offline.html');
-});
-
-app.get('*', function (req, res) {
-  res.sendFile(__dirname + '/views/index.html');
-});
-
-server.listen(config.uiPort, function () {
-  let host = server.address().address;
-  let port = server.address().port;
-  log.info(`HTTP server listening on ${host}:${port}`);
-}).on('error', function (err) {
-  log.fatal('HTTP server cannot listen', err);
-  process.exit(1);
+    socket.on('set_property', function (data) {
+      infrastructure.sendProperty(data);
+    });
+  });
 });
