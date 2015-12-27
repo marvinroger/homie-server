@@ -14,6 +14,9 @@ import dataValidator from '../lib/validators/datadir';
 import pkg from '../package';
 import config from '../lib/config';
 
+const DEFAULT_UI_PORT = 80;
+const DEFAULT_DATADIR = path.join(os.homedir(), '/.homie');
+
 let argv = yargs
   .usage('Usage: $0')
   .default('dataDir', () => {
@@ -25,12 +28,12 @@ let argv = yargs
 
 let dataDir = argv.dataDir;
 if (dataDir === null) {
-  dataDir = path.join(os.homedir(), '/.homie');
+  dataDir = DEFAULT_DATADIR;
 }
 
 let uiPort = argv.uiPort;
 if (!Number.isInteger(uiPort) || uiPort < 1 || uiPort > 65535) {
-  uiPort = 80;
+  uiPort = DEFAULT_UI_PORT;
 }
 
 let homieStyled = clor.magenta(`\

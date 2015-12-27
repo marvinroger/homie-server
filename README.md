@@ -1,9 +1,9 @@
 Homie server
 ============
 
-[![npm version](https://img.shields.io/npm/v/homie-server.svg)](https://www.npmjs.com/package/homie-server) [![Travis CI](https://img.shields.io/travis/marvinroger/homie-server.svg)](https://travis-ci.org/marvinroger/homie-server) [![Coveralls](https://img.shields.io/coveralls/marvinroger/homie-server.svg)](https://coveralls.io/r/marvinroger/homie-server) (broken) [![Dependency Status](https://david-dm.org/marvinroger/homie-server.svg?style=flat)](https://david-dm.org/marvinroger/homie-server) [![devDependency Status](https://david-dm.org/marvinroger/homie-server/dev-status.svg?style=flat)](https://david-dm.org/marvinroger/homie-server#info=devDependencies)
+[![npm version](https://img.shields.io/npm/v/homie-server.svg?style=flat-square)](https://www.npmjs.com/package/homie-server) [![Travis CI](https://img.shields.io/travis/marvinroger/homie-server.svg?style=flat-square)](https://travis-ci.org/marvinroger/homie-server) [![Coveralls](https://img.shields.io/coveralls/marvinroger/homie-server.svg?style=flat-square)](https://coveralls.io/r/marvinroger/homie-server) (broken) [![Dependency Status](https://img.shields.io/david/marvinroger/homie-server.svg?style=flat-square)](https://david-dm.org/marvinroger/homie-server) [![devDependency Status](https://img.shields.io/david/dev/marvinroger/homie-server.svg?style=flat-square)](https://david-dm.org/marvinroger/homie-server#info=devDependencies) ![Built with love](https://img.shields.io/badge/built%20with-%E2%99%A5-ff69b4.svg?style=flat-square)
 
-Server of Homie, an opinionated home automation system using MQTT. The project is currently in alpha.
+Server of Homie, an opinionated home automation system using MQTT. Built with Node.js. The project is currently in alpha.
 
 ![Homie server screenshot](screenshot.png)
 
@@ -82,7 +82,7 @@ This manifest needs a firmware to be stored in `ota/bin/Marvin_s_Room.bin`, else
 
 ## Contribute
 
-Constributions are very welcome!
+Contributions are very welcome!
 
 To work/start the git Homie version, just run `npm run dev`.
 This will build the public directory, and watch for changes in the `app` folder.
