@@ -1,7 +1,7 @@
 'use strict';
 
 import test from 'tape';
-import validator from '../lib/datadir-validator';
+import validator from '../lib/validators/datadir';
 
 test('DataDirValidator.validateOtaManifest', function (t) {
   t.plan(5);

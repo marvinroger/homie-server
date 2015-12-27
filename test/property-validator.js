@@ -1,7 +1,7 @@
 'use strict';
 
 import test from 'tape';
-import validator from '../lib/property-validator';
+import validator from '../lib/validators/property';
 
 test('PropertyValidator.canReceive', function (t) {
   // non-existent type

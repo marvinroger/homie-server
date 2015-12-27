@@ -10,7 +10,7 @@ import clor from 'clor';
 import yargs from 'yargs';
 
 import log from '../lib/log';
-import dataValidator from '../lib/datadir-validator';
+import dataValidator from '../lib/validators/datadir';
 import pkg from '../package';
 import config from '../lib/config';
 
