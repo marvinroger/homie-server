@@ -37,7 +37,7 @@
   "bugs": "https://github.com/marvinroger/homie-server/issues",
   "homepage": "https://github.com/marvinroger/homie-server",
   "engines": {
-    "node": ">=4.0.0"
+    "node": ">=0.12.0"
   },
   "license": "GPL-2.0",
   "dependencies": {
