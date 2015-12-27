@@ -1,4 +1,4 @@
-FROM armhf/node:4.2
+FROM armhf/node:5.3
 
 RUN npm install -g homie-server
 

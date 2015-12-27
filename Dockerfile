@@ -1,4 +1,4 @@
-FROM node:4
+FROM node:5
 
 RUN npm install -g homie-server
 
