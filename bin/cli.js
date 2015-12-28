@@ -2,6 +2,7 @@
 
 'use strict';
 
+import YAML from 'yamljs';
 import os from 'os';
 import ip from 'internal-ip';
 import path from 'path';
@@ -71,25 +72,25 @@ let mkdirIfNotExisting = (dir) => {
   }
 };
 
-let mkjsonIfNotExisting = (path, object) => {
+let mkyamlIfNotExisting = (path, object) => {
   try {
     fs.accessSync(path, fs.R_OK | fs.W_OK);
   } catch (err) {
-    fs.writeFileSync(path, JSON.stringify(object, null, 2), 'utf8');
+    fs.writeFileSync(path, YAML.stringify(object, null, 2), 'utf8');
   }
 };
 
 mkdirIfNotExisting(dataDir);
-mkjsonIfNotExisting(path.join(dataDir, '/infrastructure.json'), { devices: [], groups: [] });
-mkjsonIfNotExisting(path.join(dataDir, '/config.json'), { });
+mkyamlIfNotExisting(path.join(dataDir, '/infrastructure.yml'), { devices: [], groups: [] });
+mkyamlIfNotExisting(path.join(dataDir, '/config.yml'), { });
 mkdirIfNotExisting(path.join(dataDir, '/ota'));
-mkjsonIfNotExisting(path.join(dataDir, '/ota/manifest.json'), { firmwares: [] });
+mkyamlIfNotExisting(path.join(dataDir, '/ota/manifest.yml'), { firmwares: [] });
 mkdirIfNotExisting(path.join(dataDir, '/ota/bin'));
 mkdirIfNotExisting(path.join(dataDir, '/db'));
 
-var infrastructure = require(path.join(dataDir, '/infrastructure.json'));
+var infrastructure = YAML.load(path.join(dataDir, '/infrastructure.yml'));
 if (!dataValidator.validateInfrastructure(infrastructure)) {
-  fail('infrastructure.json is invalid');
+  fail('infrastructure.yml is invalid');
 }
 
 config.dataDir = dataDir;

@@ -25,60 +25,49 @@ The Homie server can only be started using the CLI interface. Start Homie by cal
 
 Three files define the behavior of Homie, and are all contained in the data directory:
 
-1. The `config.json` file. It will contain some configuration like for example whether you use metric or imperial units. Empty for now.
+1. The `config.yml` file. It will contain some configuration like for example whether you use metric or imperial units. Empty for now.
 
-2. The `infrastructure.json` file. This file contains the representation of your Homie devices. You can also group devices there.
+2. The `infrastructure.yml` file. This file contains the representation of your Homie devices. You can also group devices there.
 
-```json
-{
-  "devices": [
-    {
-      "id": "marvin-shutters",
-      "name": "Marvin's shutters",
-      "location": "Marvin's room",
-      "nodes": [{
-        "type": "shutters",
-        "id": "shutters",
-        "name": "Shutters"
-      }]
-    },
-    {
-      "id": "marvin-light",
-      "name": "Marvin's light",
-      "location": "Marvin's room",
-      "nodes": [{
-        "type": "light",
-        "id": "light",
-        "name": "Main light"
-      }]
-    },
-  ],
-  "groups": [
-    {
-      "id": "marvin",
-      "name": "Marvin's room",
-      "devices": ["marvin-shutters", "marvin-light"]
-    }
-  ]
-}
+```yaml
+devices:
+  - id: marvin-shutters
+    name: Marvin's shutters
+    location: Marvin's room
+    nodes:
+      - type: shutters
+        id: shutters
+        name: Shutters
+  - id: marvin-lights
+    name: Marvin's lights
+    location: Marvin's room
+    nodes:
+      - type: light
+        id: main
+        name: Main light
+      - type: light
+        id: bed
+        name: Bed light
 
+groups:
+  id: marvin
+  name: Marvin's room
+  devices:
+    - marvin-shutters
+    - marvin-lights
 ```
 
-3. The `ota/manifest.json` file. It contains a definition of the firmwares for your devices, like so:
+3. The `ota/manifest.yml` file. It contains a definition of the firmwares for your devices, like so:
 
-```json
-{
-  "firmwares": [
-    {
-      "name": "Marvin_s_Room",
-      "version": "1.0.0",
-      "devices": ["marvin-shutters"]
-    }
-  ]
-}
+```yaml
+firmwares:
+  - name: light-firmware
+    version: 1.0.0
+    devices:
+      - marvin-lights
 ```
 
-This manifest needs a firmware to be stored in `ota/bin/Marvin_s_Room.bin`, else OTA won't be handled. You can update the manifest while Homie is running, it will be hot-loaded.
+For this example manifest, you would put the firmware binary in `ota/bin/light-firmware.bin`, otherwise, OTA won't be handled. You can update the manifest while Homie is running, it will be hot loaded.
 
 ## Contribute
 
