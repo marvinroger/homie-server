@@ -6,40 +6,38 @@ import validator from '../lib/validators/datadir';
 test('DataDirValidator.validateOtaManifest', function (t) {
   t.plan(5);
 
-  // null
   validator.validateOtaManifest(null, false).then((valid) => {
-    t.equal(valid, false);
+    t.equal(valid, false, 'fail when null');
   });
-  // empty object
+
   validator.validateOtaManifest({}, false).then((valid) => {
-    t.equal(valid, false);
+    t.equal(valid, false, 'fail when empty object');
   });
-  // empty firmwares
+
   validator.validateOtaManifest({ firmwares: [] }, false).then((valid) => {
-    t.equal(valid, true);
+    t.equal(valid, true, 'pass when empty firmwares');
   });
-  // valid manifest
+
   validator.validateOtaManifest({ firmwares: [ { name: 'ota', version: '1.0.0', devices: ['device'] } ] }, false).then((valid) => {
-    t.equal(valid, true);
+    t.equal(valid, true, 'pass when valid fulfilled manifest');
   });
-  // multiple firmwares for a device
+
   validator.validateOtaManifest({ firmwares: [ { name: 'ota', version: '1.0.0', devices: ['device'] }, { name: 'ota2', version: '1.0.0', devices: ['device'] } ] }, false).then((valid) => {
-    t.equal(valid, false);
+    t.equal(valid, false, 'fail when multiple firmwares for a device');
   });
 });
 
 test('DataDirValidator.validateInfrastructure', function (t) {
   let valid;
-  // null
   valid = validator.validateInfrastructure(null);
-  t.equal(valid, false);
-  // empty object
+  t.equal(valid, false, 'fail when null');
+
   valid = validator.validateInfrastructure({});
-  t.equal(valid, false);
-  // empty infrastructure
+  t.equal(valid, false, 'fail when empty object');
+
   valid = validator.validateInfrastructure({ devices: [], groups: [] });
-  t.equal(valid, true);
-  // duplicate device ids
+  t.equal(valid, true, 'pass when empty infrastructure');
+
   valid = validator.validateInfrastructure({
     devices: [
       {
@@ -64,8 +62,8 @@ test('DataDirValidator.validateInfrastructure', function (t) {
       }
     ], groups: []
   });
-  t.equal(valid, false);
-  // duplicate node ids
+  t.equal(valid, false, 'fail when duplicate device id');
+
   valid = validator.validateInfrastructure({
     devices: [
       {
@@ -84,8 +82,8 @@ test('DataDirValidator.validateInfrastructure', function (t) {
       }
     ], groups: []
   });
-  t.equal(valid, false);
-  // duplicate group ids
+  t.equal(valid, false, 'fail when duplicate node id');
+
   valid = validator.validateInfrastructure({
     devices: [
       {
@@ -118,8 +116,8 @@ test('DataDirValidator.validateInfrastructure', function (t) {
       devices: ['test2']
     }]
   });
-  t.equal(valid, false);
-  // invalid device in group
+  t.equal(valid, false, 'fail when duplicate group id');
+
   valid = validator.validateInfrastructure({
     devices: [
       {
@@ -138,8 +136,8 @@ test('DataDirValidator.validateInfrastructure', function (t) {
       devices: ['dontexist']
     }]
   });
-  t.equal(valid, false);
-  // invalid node types
+  t.equal(valid, false, 'fail when non-existent device id in group');
+
   valid = validator.validateInfrastructure({
     devices: [
       {
@@ -154,7 +152,7 @@ test('DataDirValidator.validateInfrastructure', function (t) {
       }
     ], groups: []
   });
-  t.equal(valid, false);
+  t.equal(valid, false, 'fail when invalid node type');
 
   t.end();
 });
