@@ -1,5 +1,16 @@
 <!DOCTYPE html>
-<html lang="fr" manifest="homie.appcache">
+<!--
+Offline file defined in appcache.
+appcache sucks, don't:
+
+- include this file in the CACHE section of the appcache
+- set an appcache here
+- add external css
+- refer to any file not defined in the appcache
+
+else it won't work...
+-->
+<html lang="fr">
   <head>
     <meta charset="utf-8">
 
@@ -7,18 +18,38 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
     <meta name="theme-color" content="#ff8a80">
-    <link rel="manifest" href="manifest.json">
 
     <link rel="icon" type="image/png" href="img/favicon-192x192.png" sizes="192x192">
     <link rel="icon" type="image/png" href="img/favicon-32x32.png" sizes="32x32">
     <link rel="icon" type="image/png" href="img/favicon-16x16.png" sizes="16x16">
 
-    <link rel="stylesheet" type="text/css" href="3rd/semantic/semantic.min.css">
+    <style>
+      html {
+        height: 100%;
+      }
+      body {
+        min-height: 100%;
+        padding: 20px 0 0 0;
+        margin: 0;
+
+        box-sizing: border-box;
+
+        background-color: #2c3e50;
+      }
+
+      #wrapper {
+        text-align: center;
+        font-size: 2em;
+        font-family: sans-serif;
+        color: #ecf0f1;
+      }
+    </style>
   </head>
 
   <body>
-    <div class="ui active dimmer">
-      <div class="ui text loader">Vous devez être connecté pour accéder à Homie.</div>
+    <div id="wrapper">
+      <img src="img/favicon-192x192.png" alt="Homie logo">
+      <p>Vous devez être connecté au réseau pour utiliser Homie.</p>
     </div>
   </body>
 </html>

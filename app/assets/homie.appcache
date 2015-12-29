@@ -1,7 +1,15 @@
 CACHE MANIFEST
 
-FALLBACK:
-/ /offline
+# 29-12-2015 v0.2
 
 NETWORK:
 *
+
+CACHE:
+/favicon.ico
+/img/favicon-192x192.png
+/img/favicon-32x32.png
+/img/favicon-16x16.png
+
+FALLBACK:
+/ /offline.html
