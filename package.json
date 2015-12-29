@@ -1,6 +1,6 @@
 {
   "name": "homie-server",
-  "version": "0.1.8",
+  "version": "0.2.0",
   "description": "Server-part of Homie, an opinionated home automation system using MQTT",
   "main": "index.js",
   "scripts": {
