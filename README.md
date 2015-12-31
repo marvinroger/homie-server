@@ -67,7 +67,7 @@ firmwares:
       - marvin-lights
 ```
 
-For this example manifest, you would put the firmware binary in `ota/bin/light-firmware.bin`, otherwise, OTA won't be handled. You can update the manifest while Homie is running, it will be hot loaded.
+For this example manifest, you would put the firmware binary in `ota/firmwares/light-firmware.bin`, otherwise, OTA won't be handled. You can update the manifest while Homie is running, it will be hot loaded.
 
 ## Contribute
 

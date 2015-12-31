@@ -57,7 +57,7 @@ let bootstrap = (options) => {
   mkyamlIfNotExisting(path.join(dataDir, '/config.yml'), { });
   mkdirIfNotExisting(path.join(dataDir, '/ota'));
   mkyamlIfNotExisting(path.join(dataDir, '/ota/manifest.yml'), { firmwares: [] });
-  mkdirIfNotExisting(path.join(dataDir, '/ota/bin'));
+  mkdirIfNotExisting(path.join(dataDir, '/ota/firmwares'));
   mkdirIfNotExisting(path.join(dataDir, '/db'));
 
   var infrastructure = YAML.load(path.join(dataDir, '/infrastructure.yml'));
