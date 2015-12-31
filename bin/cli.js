@@ -2,40 +2,24 @@
 
 'use strict';
 
-import YAML from 'yamljs';
-import os from 'os';
 import ip from 'internal-ip';
-import path from 'path';
-import fs from 'fs';
 import clor from 'clor';
 import yargs from 'yargs';
 
-import log from '../lib/log';
-import dataValidator from '../lib/validators/datadir';
+import bootstrap from '../index';
 import pkg from '../package';
-import config from '../lib/config';
-
-const DEFAULT_UI_PORT = 80;
-const DEFAULT_DATADIR = path.join(os.homedir(), '/.homie');
 
 let argv = yargs
-  .usage('Usage: $0')
-  .default('dataDir', () => {
-    return null;
-  }).default('uiPort', () => {
-    return null;
+  .usage('Usage: $0 [options]')
+  .option('uiPort', {
+    describe: 'Port you want the UI to listen to. Defaults to 80.'
   })
+  .option('dataDir', {
+    describe: "Top directory you want Homie's data to be stored in. Defaults to <homeDir>/.homie"
+  })
+  .help('help')
+  .locale('en')
   .argv;
-
-let dataDir = argv.dataDir;
-if (dataDir === null) {
-  dataDir = DEFAULT_DATADIR;
-}
-
-let uiPort = argv.uiPort;
-if (!Number.isInteger(uiPort) || uiPort < 1 || uiPort > 65535) {
-  uiPort = DEFAULT_UI_PORT;
-}
 
 let homieStyled = clor.magenta(`\
   _ _              _
@@ -45,54 +29,14 @@ let homieStyled = clor.magenta(`\
 `).toString();
 
 console.log(homieStyled);
-console.log(clor.magenta(`Version ${clor.bold(`${pkg.version}`)}\n`).toString());
+console.log(clor.magenta('Version ').bold.magenta(pkg.version).line());
 
-console.log(clor.magenta(`Your data directory is ${clor.bold.underline(`${dataDir}`)}`).toString());
-console.log(clor.magenta(`See https://git.io/homie-server#configuration\n`).toString());
+console.log(clor.magenta('See ').underline.magenta('https://git.io/homie-server#configuration').line());
 
-console.log(clor.magenta(`Homie server IP is ${clor.bold.underline(`${ip.v4()}`)}`).toString());
-console.log(clor.magenta("Make sure this IP won't change over time\n").toString());
+console.log(clor.magenta('Homie server IP is ').bold.underline.magenta(ip.v4())());
+console.log(clor.magenta("Make sure this IP won't change over time").line());
 
-let fail = (message) => {
-  log.fatal(message);
-  process.exit(1);
-};
-
-try {
-  fs.accessSync(path.join(dataDir, '..'), fs.R_OK | fs.W_OK);
-} catch (err) {
-  fail(`Cannot access dataDir ${dataDir}`);
-}
-
-let mkdirIfNotExisting = (dir) => {
-  try {
-    fs.mkdirSync(dir);
-  } catch (err) {
-    return;
-  }
-};
-
-let mkyamlIfNotExisting = (path, object) => {
-  try {
-    fs.accessSync(path, fs.R_OK | fs.W_OK);
-  } catch (err) {
-    fs.writeFileSync(path, YAML.stringify(object, null, 2), 'utf8');
-  }
-};
-
-mkdirIfNotExisting(dataDir);
-mkyamlIfNotExisting(path.join(dataDir, '/infrastructure.yml'), { devices: [], groups: [] });
-mkyamlIfNotExisting(path.join(dataDir, '/config.yml'), { });
-mkdirIfNotExisting(path.join(dataDir, '/ota'));
-mkyamlIfNotExisting(path.join(dataDir, '/ota/manifest.yml'), { firmwares: [] });
-mkdirIfNotExisting(path.join(dataDir, '/ota/bin'));
-mkdirIfNotExisting(path.join(dataDir, '/db'));
-
-var infrastructure = YAML.load(path.join(dataDir, '/infrastructure.yml'));
-if (!dataValidator.validateInfrastructure(infrastructure)) {
-  fail('infrastructure.yml is invalid');
-}
-
-config.dataDir = dataDir;
-config.uiPort = uiPort;
-require('../index');
+bootstrap({
+  uiPort: argv.uiPort,
+  dataDir: argv.dataDir
+});
