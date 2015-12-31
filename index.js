@@ -6,13 +6,20 @@ import fs from 'fs';
 import YAML from 'yamljs';
 import _ from 'underscore';
 
+import dispatcher from './lib/dispatcher';
 import dataValidator from './lib/validators/datadir';
-import config from './lib/config';
 
 import log from './lib/log';
 
+import HomieServer from './lib/servers/homie';
+import GuiServer from './lib/servers/gui';
+import OtaServer from './lib/servers/ota';
+import Infrastructure from './lib/infrastructure';
+
 const DEFAULT_UI_PORT = 80;
 const DEFAULT_DATADIR = path.join(os.homedir(), '/.homie');
+
+let config = {};
 
 let bootstrap = (options) => {
   let uiPort = options.uiPort || DEFAULT_UI_PORT;
@@ -65,17 +72,27 @@ let bootstrap = (options) => {
 };
 
 let start = () => {
-  let homieServer = require('./lib/servers/homie').default;
-  let guiServer = require('./lib/servers/gui').default;
-  let otaServer = require('./lib/servers/ota').default;
-  let infrastructure = require('./lib/infrastructure').default;
-  const servers = [homieServer, guiServer, otaServer];
+  let infrastructure = new Infrastructure({ dataDir: config.dataDir });
+  dispatcher.attach('infrastructure', infrastructure);
 
-  servers.forEach(function (server) {
+  const Servers = [{
+    Class: HomieServer,
+    params: { dataDir: config.dataDir }
+  }, {
+    Class: GuiServer,
+    params: { port: config.uiPort }
+  }, {
+    Class: OtaServer,
+    params: { dataDir: config.dataDir }
+  }];
+
+  Servers.forEach(function (Server) {
+    let server = new Server.Class(Server.params);
     server.start();
 
     server.on('ready', function (data) {
       log.info(`${server.getName()} server listening on ${data.host}:${data.port}`);
+      dispatcher.attach(server.getName(), server);
       serversReady();
     });
 
@@ -85,23 +102,8 @@ let start = () => {
     });
   });
 
-  let serversReady = _.after(servers.length, () => {
-    infrastructure.on('update', function (patch) {
-      guiServer.getWebsocket().emit('infrastructure_updated', patch);
-    });
-
-    // WebSocket connect handler
-
-    guiServer.getWebsocket().on('connection', function (socket) {
-      socket.emit('infrastructure', {
-        devices: infrastructure.getRepresentation().devices,
-        groups: infrastructure.getRepresentation().groups
-      });
-
-      socket.on('set_property', function (data) {
-        infrastructure.sendProperty(data);
-      });
-    });
+  let serversReady = _.after(Servers.length, () => {
+    dispatcher.start();
   });
 };
 
