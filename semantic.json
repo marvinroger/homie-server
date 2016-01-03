@@ -1,5 +1,5 @@
 {
-  "base": "public/3rd/semantic",
+  "base": "app/vendor/semantic",
   "paths": {
     "source": {
       "config": "src/theme.config",
