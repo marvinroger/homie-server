@@ -34,9 +34,18 @@ export default class DeviceContainer extends React.Component {
         return;
       }
 
+      let groupColor;
+      let groupForThisDevice = this.props.groups.filter((group) => {
+        return group.devices.indexOf(device.id) > -1;
+      });
+
+      if (groupForThisDevice.length) {
+        groupColor = groupForThisDevice[0].color;
+      }
+
       device.nodes.map((node, nodeIndex) => {
         let Node = Nodes[node.type];
-        nodes.push(<Node name={node.name} type={node.type} state={node.state} deviceId={device.id} nodeId={node.id} deviceState={device.state} location={device.location} setProperty={this.props.setProperty} key={deviceIndex + '-' + nodeIndex} />);
+        nodes.push(<Node name={node.name} type={node.type} state={node.state} deviceId={device.id} deviceColor={device.color} nodeId={node.id} nodeColor={node.color} groupColor={groupColor} deviceState={device.state} location={device.location} setProperty={this.props.setProperty} key={deviceIndex + '-' + nodeIndex} />);
       });
     });
 
@@ -51,5 +60,6 @@ export default class DeviceContainer extends React.Component {
 DeviceContainer.propTypes = {
   devices: React.PropTypes.array.isRequired,
   devicesShown: React.PropTypes.oneOfType([ React.PropTypes.array, React.PropTypes.string ]).isRequired,
+  groups: React.PropTypes.array.isRequired,
   setProperty: React.PropTypes.func.isRequired
 };

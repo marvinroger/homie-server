@@ -49,7 +49,7 @@ export default class Device extends React.Component {
       <div className='ui column'>
         <div className='ui fluid card'>
           <div className='image'>
-            <img src={typeof this.props.image !== 'undefined' ? `img/icons/${this.props.type}/${this.props.image}.png` : 'img/icons/common/unknown.png'} style={{backgroundColor: this.props.color, padding: '20px'}}/>
+            <img src={typeof this.props.image !== 'undefined' ? `img/icons/${this.props.type}/${this.props.image}.png` : 'img/icons/common/unknown.png'} style={{backgroundColor: this.props.nodeColor || this.props.deviceColor || this.props.groupColor || this.props.color, padding: '20px'}}/>
           </div>
 
           <div className='content'>
@@ -76,7 +76,10 @@ Device.propTypes = {
   location: React.PropTypes.string.isRequired,
   children: React.PropTypes.object.isRequired,
   deviceId: React.PropTypes.string.isRequired,
+  deviceColor: React.PropTypes.string,
   nodeId: React.PropTypes.string.isRequired,
+  nodeColor: React.PropTypes.string,
+  groupColor: React.PropTypes.string,
   deviceState: React.PropTypes.shape({
     online: React.PropTypes.bool.isRequired,
     localip: React.PropTypes.string,

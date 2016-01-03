@@ -53,7 +53,7 @@ class App extends React.Component {
 
         <div className='ui main container'>
           <Menu groups={this.props.groups} connection={this.props.connection} onMenuChange={this.onGroupChange.bind(this)} />
-          <DeviceContainer devicesShown={this.state.devicesShown} devices={this.props.devices} setProperty={this.props.setProperty} />
+          <DeviceContainer groups={this.props.groups} devicesShown={this.state.devicesShown} devices={this.props.devices} setProperty={this.props.setProperty} />
         </div>
       </div>
     );
