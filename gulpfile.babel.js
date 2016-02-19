@@ -1,5 +1,6 @@
 'use strict';
 
+import path from 'path';
 import gulp from 'gulp';
 import plumber from 'gulp-plumber'; // help to avoid crash if error in a task
 import newer from 'gulp-newer';
@@ -26,7 +27,8 @@ let errorHandler = function (task) {
     console.log(`Error in ${task}: ${error.message}`);
     notifier.notify({
       title: `Error in ${task}`,
-      message: error.message
+      message: error.message,
+      icon: path.join(__dirname, 'gulp.png')
     });
   };
 };
