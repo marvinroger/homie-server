@@ -31,16 +31,14 @@ Three files define the behavior of Homie, and are all contained in the data dire
 
 ```yaml
 devices:
-  - id: marvin-shutters
-    name: Marvin's shutters
+  - id: abcd0123
     location: Marvin's room
     nodes:
       - type: shutters
         id: shutters
         name: Shutters
-  - id: marvin-lights
-    name: Marvin's lights
-    location: Marvin's room
+  - id: efab4567
+    location: Mathys's room
     nodes:
       - type: light
         id: main
@@ -50,11 +48,11 @@ devices:
         name: Bed light
 
 groups:
-  id: marvin
-  name: Marvin's room
+  id: first-floor
+  name: First floor
   devices:
-    - marvin-shutters
-    - marvin-lights
+    - abcd0123
+    - efab4567
 ```
 
 3. The `ota/manifest.yml` file. It contains a definition of the firmwares for your devices, like so:

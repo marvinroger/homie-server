@@ -39,9 +39,11 @@ export default class Device extends React.Component {
     });
 
     let tooltipHtml = `
+      <b>Nom objet : </b> ${this.props.deviceState.name ? this.props.deviceState.name : 'inconnu'}<br>
       <b>ID objet : </b> ${this.props.deviceId}<br>
-      <b>Version objet : </b> ${this.props.deviceState.version ? this.props.deviceState.version : 'inconnue'}<br>
+      <b>Firmware objet : </b> ${this.props.deviceState.fwname ? this.props.deviceState.fwname + (this.props.deviceState.fwversion ? ' (' + this.props.deviceState.fwversion + ')' : '') : 'inconnu'}<br>
       <b>ID noeud : </b> ${this.props.nodeId}<br>
+      <b>Signal</b> : ${this.props.deviceState.signal ? this.props.deviceState.signal + '%' : 'inconnu'}<br>
       <b>IP</b> : ${this.props.deviceState.localip ? this.props.deviceState.localip : 'inconnue'}
     `;
 
@@ -82,6 +84,10 @@ Device.propTypes = {
   groupColor: React.PropTypes.string,
   deviceState: React.PropTypes.shape({
     online: React.PropTypes.bool.isRequired,
+    name: React.PropTypes.string,
+    fwname: React.PropTypes.string,
+    fwversion: React.PropTypes.string,
+    signal: React.PropTypes.number,
     localip: React.PropTypes.string,
     version: React.PropTypes.version
   }).isRequired,
