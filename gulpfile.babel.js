@@ -134,9 +134,7 @@ gulp.task('es6-7:dist', function () {
     }) // Don't crash if failed, plumber doesn't work with browserify
     .pipe(source('bundle.min.js'))
     .pipe(buffer())
-    .pipe(sourcemaps.init({ loadMaps: true }))
     .pipe(uglify())
-    .pipe(sourcemaps.write('./'))
     .pipe(gulp.dest('./public/js'));
 });
 
