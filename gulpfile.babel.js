@@ -12,7 +12,6 @@ import del from 'del'; // delete files
 import imagemin from 'gulp-imagemin';
 import runSequence from 'run-sequence';
 import notifier from 'node-notifier';
-import sourcemaps from 'gulp-sourcemaps';
 import uglify from 'gulp-uglify';
 import browserify from 'browserify';
 import envify from 'envify/custom';
