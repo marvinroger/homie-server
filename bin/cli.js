@@ -17,7 +17,7 @@ let argv = yargs
   .option('dataDir', {
     describe: "Top directory you want Homie's data to be stored in. Defaults to <homeDir>/.homie"
   })
-  .help('help')
+  .help()
   .locale('en')
   .argv;
 
