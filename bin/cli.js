@@ -12,10 +12,13 @@ import pkg from '../package';
 let argv = yargs
   .usage('Usage: $0 [options]')
   .option('uiPort', {
-    describe: 'Port you want the UI to listen to. Defaults to 80.'
+    describe: 'Port you want the UI to listen to. Defaults to 80'
   })
   .option('dataDir', {
     describe: "Top directory you want Homie's data to be stored in. Defaults to <homeDir>/.homie"
+  })
+  .option('logLevel', {
+    describe: 'Minimum log level for console output'
   })
   .help()
   .locale('en')
@@ -38,5 +41,6 @@ console.log(clor.magenta("Make sure this IP won't change over time").line());
 
 bootstrap({
   uiPort: argv.uiPort,
-  dataDir: argv.dataDir
+  dataDir: argv.dataDir,
+  logLevel: argv.logLevel
 });

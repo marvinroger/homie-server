@@ -4,7 +4,7 @@
   "description": "Server-part of Homie, an opinionated home automation system using MQTT",
   "main": "index.js",
   "scripts": {
-    "start": "babel-node ./bin/cli.js --uiPort 3000",
+    "start": "babel-node ./bin/cli.js --uiPort 3000 --logLevel 4",
     "test": "npm run test-standard && npm run test-deps && npm run test-tests",
     "test-standard": "semistandard | snazzy",
     "test-deps": "depcheck --ignore-dirs=dist,public --ignores=babel*,semantic-ui",

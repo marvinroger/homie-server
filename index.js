@@ -11,7 +11,7 @@ import dataValidator from './lib/validators/datadir';
 
 import log from './lib/log';
 
-import HomieServer from './lib/servers/homie';
+import MqttServer from './lib/servers/mqtt';
 import GuiServer from './lib/servers/gui';
 import OtaServer from './lib/servers/ota';
 import Infrastructure from './lib/infrastructure';
@@ -24,6 +24,9 @@ let config = {};
 let bootstrap = (options) => {
   let uiPort = options.uiPort || DEFAULT_UI_PORT;
   let dataDir = options.dataDir || DEFAULT_DATADIR;
+  if (typeof options.logLevel !== 'undefined') {
+    log.setLogLevel(options.logLevel);
+  }
 
   log.info(`Using data directory ${dataDir}`);
 
@@ -75,8 +78,8 @@ let start = () => {
   let infrastructure = new Infrastructure({ dataDir: config.dataDir });
   dispatcher.attach('infrastructure', infrastructure);
 
-  const Servers = [{
-    Class: HomieServer,
+  const servers = [{
+    Class: MqttServer,
     params: { dataDir: config.dataDir }
   }, {
     Class: GuiServer,
@@ -86,23 +89,24 @@ let start = () => {
     params: { dataDir: config.dataDir }
   }];
 
-  Servers.forEach(function (Server) {
-    let server = new Server.Class(Server.params);
-    server.start();
+  servers.forEach(function (server) {
+    let serverInstance = new server.Class(server.params);
+    serverInstance.start();
 
-    server.on('ready', function (data) {
-      log.info(`${server.getName()} server listening on ${data.host}:${data.port}`);
-      dispatcher.attach(server.getName(), server);
+    serverInstance.on('ready', function (data) {
+      log.info(`${serverInstance.getName()} server listening on ${data.host}:${data.port}`);
+      dispatcher.attach(serverInstance.getName().toLowerCase(), serverInstance);
       serversReady();
     });
 
-    server.on('error', function (err) {
-      log.fatal(`${server.getName()} server cannot listen`, err);
+    serverInstance.on('error', function (err) {
+      log.fatal(`${serverInstance.getName()} server cannot listen`, err);
       process.exit(1);
     });
   });
 
-  let serversReady = _.after(Servers.length, () => {
+  let serversReady = _.after(servers.length, () => {
+    log.info(`Servers started`);
     dispatcher.start();
   });
 };
