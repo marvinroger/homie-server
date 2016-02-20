@@ -4,7 +4,6 @@ import os from 'os';
 import path from 'path';
 import fs from 'fs';
 import YAML from 'yamljs';
-import _ from 'underscore';
 
 import dispatcher from './lib/dispatcher';
 import dataValidator from './lib/validators/datadir';
@@ -105,10 +104,13 @@ let start = () => {
     });
   });
 
-  let serversReady = _.after(servers.length, () => {
-    log.info(`Servers started`);
-    dispatcher.start();
-  });
+  let serversReadyCount = 0;
+  let serversReady = function () {
+    if (++serversReadyCount === servers.length) {
+      log.info(`Servers started`);
+      dispatcher.start();
+    }
+  };
 };
 
 export default bootstrap;
