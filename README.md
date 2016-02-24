@@ -29,7 +29,7 @@ Three files define the behavior of Homie, and are all contained in the data dire
 
 ```yaml
 mqtt:
-  url: mqtt://127.0.0.1:35589
+  url: mqtt://127.0.0.1:1883
   clientId: optional client ID
   username: optional username
   password: optional password
