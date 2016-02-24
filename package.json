@@ -1,6 +1,6 @@
 {
   "name": "homie-server",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "description": "Server-part of Homie, an opinionated home automation system using MQTT",
   "main": "index.js",
   "scripts": {
@@ -49,6 +49,7 @@
     "internal-ip": "^1.1.0",
     "is-my-json-valid": "^2.13.0",
     "md5": "^2.0.0",
+    "mqtt": "^1.7.2",
     "nedb": "^1.5.0",
     "pauseable": "^0.1.6",
     "socket.io": "^1.3.7",
