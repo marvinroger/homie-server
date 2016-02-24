@@ -12,6 +12,7 @@ import del from 'del'; // delete files
 import imagemin from 'gulp-imagemin';
 import runSequence from 'run-sequence';
 import notifier from 'node-notifier';
+import sourcemaps from 'gulp-sourcemaps';
 import uglify from 'gulp-uglify';
 import browserify from 'browserify';
 import envify from 'envify/custom';
@@ -120,6 +121,8 @@ gulp.task('es6-7:dev', function () {
     }) // Don't crash if failed, plumber doesn't work with browserify
     .pipe(source('bundle.min.js'))
     .pipe(buffer())
+    .pipe(sourcemaps.init({ loadMaps: true }))
+    .pipe(sourcemaps.write('./'))
     .pipe(gulp.dest('./public/js'));
 });
 

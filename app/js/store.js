@@ -4,15 +4,15 @@ import immutable from 'immutable';
 
 import { createStore } from 'redux';
 import socketio from 'socket.io-client';
-import immpatch from 'immpatch';
 
 const SET_CONNECTION = 'SET_CONNECTION';
 const INITIAL = 'INITIAL';
-const PATCH = 'PATCH';
+const DEVICE_UPDATE = 'DEVICE_UPDATE';
+const NODE_UPDATE = 'NODE_UPDATE';
 const SET_PROPERTY = 'SET_PROPERTY';
 
 let immutableState = immutable.Map({
-  devices: [], groups: [], loading: true, connection: true
+  devices: {}, groups: [], loading: true, connection: true
 });
 
 function infrastructure (state = immutableState.toJS(), action) {
@@ -24,8 +24,11 @@ function infrastructure (state = immutableState.toJS(), action) {
       immutableState = immutableState.set('loading', false);
       immutableState = immutableState.mergeDeep(action.initial);
       return immutableState.toJS();
-    case PATCH:
-      immutableState = immpatch(immutableState, action.patch);
+    case DEVICE_UPDATE:
+      immutableState = immutableState.setIn(['devices', action.update.deviceId, 'state', action.update.property], action.update.value);
+      return immutableState.toJS();
+    case NODE_UPDATE:
+      immutableState = immutableState.setIn(['devices', action.update.deviceId, 'nodes', action.update.nodeId, 'state', action.update.property], action.update.value);
       return immutableState.toJS();
     case SET_PROPERTY:
       socket.emit('set_property', action.property);
@@ -50,8 +53,15 @@ socket.on('infrastructure', (data) => {
   store.dispatch({ type: INITIAL, initial: data });
 });
 
-socket.on('infrastructure_updated', (data) => {
-  store.dispatch({ type: PATCH, patch: data });
+socket.on('infrastructure_updated', (update) => {
+  switch (update.type) {
+    case 'device':
+      store.dispatch({ type: DEVICE_UPDATE, update: update });
+      break;
+    case 'node':
+      store.dispatch({ type: NODE_UPDATE, update: update });
+      break;
+  }
 });
 
 export default store;
