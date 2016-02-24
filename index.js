@@ -74,9 +74,6 @@ let bootstrap = (options) => {
 };
 
 let start = () => {
-  let infrastructure = new Infrastructure({ dataDir: config.dataDir });
-  dispatcher.attach('infrastructure', infrastructure);
-
   const servers = [{
     Class: MqttServer,
     params: { dataDir: config.dataDir }
@@ -88,9 +85,23 @@ let start = () => {
     params: { dataDir: config.dataDir }
   }];
 
+  let serversReadyCount = 0;
+  let serversReady = function () {
+    if (++serversReadyCount === servers.length + 1) { // +1 for infrastructure
+      log.info(`Servers started`);
+      dispatcher.start();
+    }
+  };
+
+  let infrastructure = new Infrastructure({ dataDir: config.dataDir });
+  infrastructure.on('ready', () => {
+    dispatcher.attach('infrastructure', infrastructure);
+    serversReady();
+  });
+  infrastructure.start();
+
   servers.forEach(function (server) {
     let serverInstance = new server.Class(server.params);
-    serverInstance.start();
 
     serverInstance.on('ready', function (data) {
       log.info(`${serverInstance.getName()} server listening on ${data.host}:${data.port}`);
@@ -102,15 +113,9 @@ let start = () => {
       log.fatal(`${serverInstance.getName()} server cannot listen`, err);
       process.exit(1);
     });
-  });
 
-  let serversReadyCount = 0;
-  let serversReady = function () {
-    if (++serversReadyCount === servers.length) {
-      log.info(`Servers started`);
-      dispatcher.start();
-    }
-  };
+    serverInstance.start();
+  });
 };
 
 export default bootstrap;
