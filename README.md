@@ -25,7 +25,15 @@ The Homie server can only be started using the CLI interface. Start Homie by cal
 
 Three files define the behavior of Homie, and are all contained in the data directory:
 
-1. The `config.yml` file. It will contain some configuration like for example whether you use metric or imperial units. Empty for now.
+1. The `config.yml` file. It contains some configuration like your MQTT broker address.
+
+```yaml
+mqtt:
+  url: mqtt://127.0.0.1:35589
+  clientId: optional client ID
+  username: optional username
+  password: optional password
+```
 
 2. The `infrastructure.yml` file. This file contains the representation of your Homie devices. You can also group devices there.
 

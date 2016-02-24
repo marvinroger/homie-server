@@ -10,9 +10,10 @@ import dataValidator from './lib/validators/datadir';
 
 import log from './lib/log';
 
-import MqttServer from './lib/servers/mqtt';
 import GuiServer from './lib/servers/gui';
 import OtaServer from './lib/servers/ota';
+
+import MqttClient from './lib/clients/mqtt';
 import Infrastructure from './lib/infrastructure';
 
 const DEFAULT_UI_PORT = 80;
@@ -67,17 +68,21 @@ let bootstrap = (options) => {
     fail('infrastructure.yml is invalid');
   }
 
+  var configFile = YAML.load(path.join(dataDir, '/config.yml'));
+  if (!dataValidator.validateConfig(configFile)) {
+    fail('config.yml is invalid');
+  }
+
   config.dataDir = dataDir;
   config.uiPort = uiPort;
+
+  config.file = configFile;
 
   start();
 };
 
 let start = () => {
   const servers = [{
-    Class: MqttServer,
-    params: { dataDir: config.dataDir }
-  }, {
     Class: GuiServer,
     params: { port: config.uiPort }
   }, {
@@ -85,20 +90,29 @@ let start = () => {
     params: { dataDir: config.dataDir }
   }];
 
-  let serversReadyCount = 0;
-  let serversReady = function () {
-    if (++serversReadyCount === servers.length + 1) { // +1 for infrastructure
-      log.info(`Servers started`);
+  let entitiesReadyCount = 0;
+  let entityReady = function () {
+    if (++entitiesReadyCount === servers.length + 1 + 1) { // +1 for infrastructure and mqtt
+      log.info(`Homie is ready`);
       dispatcher.start();
     }
   };
 
   let infrastructure = new Infrastructure({ dataDir: config.dataDir });
   infrastructure.on('ready', () => {
+    log.info(`Infrastructure loaded`);
     dispatcher.attach('infrastructure', infrastructure);
-    serversReady();
+    entityReady();
   });
   infrastructure.start();
+
+  let mqttClient = new MqttClient(config.file.mqtt);
+  mqttClient.on('ready', () => {
+    log.info(`MQTT client connected`);
+    dispatcher.attach('mqtt', mqttClient);
+    entityReady();
+  });
+  mqttClient.start();
 
   servers.forEach(function (server) {
     let serverInstance = new server.Class(server.params);
@@ -106,7 +120,7 @@ let start = () => {
     serverInstance.on('ready', function (data) {
       log.info(`${serverInstance.getName()} server listening on ${data.host}:${data.port}`);
       dispatcher.attach(serverInstance.getName().toLowerCase(), serverInstance);
-      serversReady();
+      entityReady();
     });
 
     serverInstance.on('error', function (err) {
