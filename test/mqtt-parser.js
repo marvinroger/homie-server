@@ -2,13 +2,14 @@
 
 import test from 'tape';
 import parser from '../lib/mqtt-parser';
+import {DEVICE_PROPERTY, NODE_PROPERTY, SET_NODE_PROPERTY} from './mqtt-parser';
 
 test('MqttParser.parse', function (t) {
   // valid
   let topic = 'devices/2testilol1/$property';
   let message = 'value';
   t.deepEqual(parser.parse(topic, message), {
-    type: 'deviceProperty',
+    type: DEVICE_PROPERTY,
     deviceId: '2testilol1',
     property: {
       name: 'property',
@@ -19,7 +20,7 @@ test('MqttParser.parse', function (t) {
   topic = 'devices/testilol/nodeid/property';
   message = 'value';
   t.deepEqual(parser.parse(topic, message), {
-    type: 'nodeProperty',
+    type: NODE_PROPERTY,
     deviceId: 'testilol',
     nodeId: 'nodeid',
     property: {
@@ -31,7 +32,13 @@ test('MqttParser.parse', function (t) {
   topic = 'devices/3-testilol/nodeid/property/set';
   message = 'value';
   t.deepEqual(parser.parse(topic, message), {
-    type: 'set'
+    type: SET_NODE_PROPERTY,
+    deviceId: '3-testilol',
+    nodeId: 'nodeid',
+    property: {
+      name: 'property',
+      value: message
+    }
   }, 'parse set node property');
 
   // invalid
