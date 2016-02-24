@@ -2,7 +2,7 @@
 
 import test from 'tape';
 import parser from '../lib/mqtt-parser';
-import {DEVICE_PROPERTY, NODE_PROPERTY, SET_NODE_PROPERTY} from './mqtt-parser';
+import {DEVICE_PROPERTY, NODE_PROPERTY, SET_NODE_PROPERTY} from '../lib/mqtt-parser';
 
 test('MqttParser.parse', function (t) {
   // valid
