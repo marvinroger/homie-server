@@ -10,3 +10,5 @@ cache:
 
 after_script:
   - npm run coveralls
+
+curl -H "Content-type: application/json" -H "Authorization: Bearer 22ptao81645d4rsb18k6" -X POST -d '{ accountName: "marvinroger", projectSlug: "homie-server", branch: "master", commitId: "b5603285da4da7846ad65a472d64c9ea27dbe930" }' https://ci.appveyor.com/api/builds
