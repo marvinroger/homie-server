@@ -35,7 +35,7 @@ then
 fi
 
 echo "Adding .npmrc"
-echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > .npmrc
+echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > dist/.npmrc
 
 echo "Publishing to npm"
 cd dist/ || exit
