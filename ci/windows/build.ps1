@@ -7,4 +7,4 @@ npm install --prefix "$PSScriptRoot\sources" homie-server
 $packageVersion = $package.version
 $setupName = "homie-server-v$packageVersion-$currentArchitecture"
 & "C:\Program Files (x86)\Inno Setup 5\iscc" /dMySourceDir="$PSScriptRoot\sources" /dMyAppVersion="$packageVersion" /dMyAppOutput="$setupName" $PSScriptRoot\script.iss
-Push-AppveyorArtifact "$PSScriptRoot\output\$setupName" -FileName "$setupName" -DeploymentName "Homie Server v$packageVersion for Windows $currentArchitecture"
+Push-AppveyorArtifact "$PSScriptRoot\output\$setupName.exe" -FileName "$setupName.exe" -DeploymentName "Homie Server v$packageVersion for Windows $currentArchitecture"
