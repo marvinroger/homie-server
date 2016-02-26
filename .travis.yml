@@ -11,11 +11,10 @@ cache:
 script:
   - npm test
   - npm run dist
-  - ci/deploy.sh
+  - sh ./ci/deploy.sh
 
 after_success:
-  - chmod +x "$TRAVIS_BUILD_DIR/ci/deploy.sh"
-  - ${TRAVIS_BUILD_DIR}/ci/deploy.sh
+  - s ./ci/deploy.sh
 
 after_script:
   - npm run coveralls
