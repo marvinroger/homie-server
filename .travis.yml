@@ -13,6 +13,7 @@ script:
   - npm run dist
 
 after_success:
+  - chmod +x ci/deploy.sh
   - ci/deploy.sh
 
 after_script:

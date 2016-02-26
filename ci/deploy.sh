@@ -1,5 +1,13 @@
 #!/usr/bin/env bash
 
+echo "Deploy script"
+
+if [ $TRAVIS_PULL_REQUEST != "false" ]
+then
+  echo "Pull request, exiting..."
+  exit 0
+fi
+
 echo $TRAVIS_PULL_REQUEST
 echo $TRAVIS_BRANCH
 echo $NPM_TOKEN
