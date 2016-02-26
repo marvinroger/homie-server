@@ -52,6 +52,6 @@ HTTP_CODE=$(curl -s -o /dev/null -i -w "%{http_code}" -H "Content-type: applicat
 
 if [ ! $? -eq 0  ] || [ ! "$HTTP_CODE" -eq 200 ]
 then
-  echo "npm publishing failed, exiting..."
+  echo "Appveyor triggering failed, exiting..."
   exit 1
 fi
