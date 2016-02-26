@@ -2,9 +2,21 @@
 
 echo "Deploy script"
 
+if [ $TRAVIS_NODE_VERSION != "stable" ]
+then
+  echo "Job is not using stable node, exiting..."
+  exit 0
+fi
+
 if [ $TRAVIS_PULL_REQUEST != "false" ]
 then
   echo "Pull request, exiting..."
+  exit 0
+fi
+
+if [ $TRAVIS_BRANCH != "master" ]
+then
+  echo "Branch is not master, exiting..."
   exit 0
 fi
 
