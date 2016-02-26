@@ -28,7 +28,8 @@ then
 fi
 
 # workaround for the above issue
-if [[ "$TRAVIS_TAG" =~ ^v[0-9]+.[0-9]+.[0-9]+$ ]]
+echo
+if [[ ! "$TRAVIS_TAG" =~ ^v[0-9]+.[0-9]+.[0-9]+$ ]]
 then
   echo "Build tag is not a version one, exiting..."
   exit 0
