@@ -18,7 +18,7 @@ after_script:
 deploy:
   skip_cleanup: true
   provider: script
-  script: $TRAVIS_BUILD/ci/deploy.sh
+  script: $TRAVIS_BUILD_DIR/ci/deploy.sh
 #  on:
 #    tags: true
 #    node: "stable"
