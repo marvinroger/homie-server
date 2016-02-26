@@ -1,0 +1,16 @@
+branches:
+  only:
+    - master
+
+environment:
+  nodejs_version: "5.5.0"
+
+install:
+  - ps: Install-Product node $env:nodejs_version x86
+  - choco install -y InnoSetup
+
+build_script:
+  - ps: ci\windows\build.ps1
+
+artifacts:
+  - path: ci\windows\output\*.exe
