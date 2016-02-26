@@ -9,6 +9,7 @@ cache:
     - node_modules
 
 script:
+  - npm test
   - npm run dist
 
 after_script:
@@ -17,7 +18,7 @@ after_script:
 deploy:
   skip_cleanup: true
   provider: script
-  script: ci/deploy.sh
+  script: $TRAVIS_BUILD/ci/deploy.sh
 #  on:
 #    tags: true
 #    node: "stable"
