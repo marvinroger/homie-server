@@ -12,8 +12,8 @@ install:
 build_script:
   - ps: ci\windows\build.ps1
 
-deploy:
-  provider: GitHub
-  auth_token:
-    secure: BhA4uA3sBTnURvUT3dKhJBuin03FNrFwz/KQwDoJbLiabujYG6Df/Q01ny3PRJOU
-  artifact: /.*\.exe/
+#deploy:
+#  provider: GitHub
+#  auth_token:
+#    secure: BhA4uA3sBTnURvUT3dKhJBuin03FNrFwz/KQwDoJbLiabujYG6Df/Q01ny3PRJOU
+#  artifact: /.*\.exe/
