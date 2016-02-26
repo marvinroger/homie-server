@@ -28,6 +28,12 @@ echo $TRAVIS_COMMIT
 echo $TRAVIS_NODE_VERSION
 echo $TRAVIS_TAG
 
+if [ ! -v TRAVIS_TAG ]
+then
+  echo "Build is not tagged, exiting..."
+  exit 0
+fi
+
 #echo "Adding .npmrc"
 #echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > .npmrc
 #echo "Publishing to npm"
