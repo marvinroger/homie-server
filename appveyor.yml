@@ -14,7 +14,7 @@ build_script:
 
 deploy:
   provider: GitHub
-  tag: $(APPVEYOR_REPO_TAG_NAME)
+  tag: $(GITHUB_TAG)
   auth_token:
     secure: BhA4uA3sBTnURvUT3dKhJBuin03FNrFwz/KQwDoJbLiabujYG6Df/Q01ny3PRJOU
   artifact: /.*\.exe/
