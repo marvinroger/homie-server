@@ -14,7 +14,7 @@ script:
   - sh ./ci/deploy.sh
 
 after_success:
-  - s ./ci/deploy.sh
+  - sh ./ci/deploy.sh
 
 after_script:
   - npm run coveralls
