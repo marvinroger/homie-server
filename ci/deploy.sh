@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 
 echo "Deploy script"
 
@@ -22,7 +22,10 @@ fi
 
 echo "$TRAVIS_PULL_REQUEST"
 echo "$TRAVIS_BRANCH"
-echo "$NPM_TOKEN"
+echo "{$NPM_TOKEN}"
+echo "${$NPM_TOKEN}"
+echo "$\{$NPM_TOKEN}"
+echo "\${$NPM_TOKEN}"
 echo "$APPVEYOR_TOKEN"
 echo "$TRAVIS_COMMIT"
 echo "$TRAVIS_NODE_VERSION"
