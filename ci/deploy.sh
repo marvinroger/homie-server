@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env sh
 
 echo "Adding .npmrc"
 echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > .npmrc
