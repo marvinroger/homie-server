@@ -8,5 +8,16 @@ cache:
   directories:
     - node_modules
 
+script:
+  - npm run dist
+
 after_script:
   - npm run coveralls
+
+deploy:
+  skip_cleanup: true
+  provider: script
+  script: ci/deploy.sh
+  on:
+    tags: true
+    node: "stable"
