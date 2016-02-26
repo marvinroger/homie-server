@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-echo "Deploy script"
+echo "== Deploy script =="
 
 if [ "$TRAVIS_NODE_VERSION" != "stable" ]
 then
@@ -33,5 +33,17 @@ echo "Publishing to npm"
 cd dist/ || exit
 npm publish
 
+if [ ! $? -eq 0 ]
+then
+  echo "npm publishing failed, exiting..."
+  exit 1
+fi
+
 echo "Triggering Appveyor build"
-curl -H "Content-type: application/json" -H "Authorization: Bearer $APPVEYOR_TOKEN" -X POST -d "{ accountName: \"marvinroger\", projectSlug: \"homie-server\", branch: \"master\", commitId: \"$TRAVIS_COMMIT\" }" https://ci.appveyor.com/api/builds
+HTTP_CODE=$(curl -s -o /dev/null -i -w "%{http_code}" -H "Content-type: application/json" -H "Authorization: Bearer $APPVEYOR_TOKEN" -X POST -d "{ accountName: \"marvinroger\", projectSlug: \"homie-server\", branch: \"master\", commitId: \"$TRAVIS_COMMIT\" }" https://ci.appveyor.com/api/builds)
+
+if [ ! $? -eq 0  ] || [ ! "$HTTP_CODE" -eq 200 ]
+then
+  echo "npm publishing failed, exiting..."
+  exit 1
+fi
