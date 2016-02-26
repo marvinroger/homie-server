@@ -11,6 +11,3 @@ install:
 
 build_script:
   - ps: ci\windows\build.ps1
-
-artifacts:
-  - path: ci\windows\output\*.exe
