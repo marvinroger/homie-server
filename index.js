@@ -57,7 +57,7 @@ let bootstrap = (options) => {
 
   mkdirIfNotExisting(dataDir);
   mkyamlIfNotExisting(path.join(dataDir, '/infrastructure.yml'), { devices: [], groups: [] });
-  mkyamlIfNotExisting(path.join(dataDir, '/config.yml'), { });
+  mkyamlIfNotExisting(path.join(dataDir, '/config.yml'), { mqtt: { url: 'mqtt://127.0.0.1:1883' } });
   mkdirIfNotExisting(path.join(dataDir, '/ota'));
   mkyamlIfNotExisting(path.join(dataDir, '/ota/manifest.yml'), { firmwares: [] });
   mkdirIfNotExisting(path.join(dataDir, '/ota/firmwares'));
