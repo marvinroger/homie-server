@@ -23,14 +23,38 @@ SourceDir={#MySourceDir}
 OutputDir="..\output"
 OutputBaseFilename={#MyAppOutput}
 SetupIconFile="icon.ico"
+UninstallDisplayIcon="{app}\icon.ico"
+UninstallDisplayName={#MyAppName}
 Compression=lzma
 SolidCompression=yes
+
+[Tasks]
+Name: install_service; Description: "Install as a service";
+
+[Icons]
+Name: "{group}\Homie Server"; Filename: "{app}\homie.cmd"; WorkingDir: "{app}"; IconFilename: "{app}\icon.ico"
+Name: "{group}\Uninstall"; Filename: "{uninstallexe}"
+
+[Run]
+Filename: "{app}\nssm.exe"; Parameters: "install ""{#MyAppName}"" ""{app}\homie.cmd"" ""--uiPort 35589 --dataDir {localappdata}\HomieServer"""; StatusMsg: "Installing service..."; Tasks: install_service; Flags: runhidden
+Filename: "{app}\nssm.exe"; Parameters: "set ""{#MyAppName}"" AppStdout ""{app}\log.txt"""; StatusMsg: "Setting stdout log file..."; Tasks: install_service; Flags: runhidden
+Filename: "{app}\nssm.exe"; Parameters: "set ""{#MyAppName}"" AppStderr ""{app}\log.txt"""; StatusMsg: "Setting stderr log file..."; Tasks: install_service; Flags: runhidden
+Filename: "{app}\nssm.exe"; Parameters: "start ""{#MyAppName}"""; StatusMsg: "Starting service..."; Tasks: install_service; Flags: runhidden
+
+[UninstallRun]
+Filename: "{app}\nssm.exe"; Parameters: "stop ""{#MyAppName}"""; Tasks: install_service; Flags: runhidden
+Filename: "{app}\nssm.exe"; Parameters: "remove ""{#MyAppName}"" confirm"; Tasks: install_service; Flags: runhidden
+
+[UninstallDelete]
+Type: files; Name: "{app}\log.txt"; Tasks: install_service
+Type: files; Name: "{app}\errlog.txt"; Tasks: install_service
+Type: filesandordirs; Name: "{localappdata}\HomieServer"; Tasks: install_service
 
 [Languages]
 Name: "english"; MessagesFile: "compiler:Default.isl"
 
 [Files]
-Source: "node.exe"; DestDir: "{app}"; Flags: ignoreversion
-Source: "homie.cmd"; DestDir: "{app}"; Flags: ignoreversion
-Source: "node_modules\*"; DestDir: "{app}\node_modules"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "icon.ico"; DestDir: "{app}"; Flags: ignoreversion
+Source: "bundle\*"; DestDir: "{app}"; Flags: ignoreversion
+Source: "bundle\node_modules\*"; DestDir: "{app}\node_modules"; Flags: ignoreversion recursesubdirs createallsubdirs
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
