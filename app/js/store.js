@@ -10,9 +10,10 @@ const INITIAL = 'INITIAL';
 const DEVICE_UPDATE = 'DEVICE_UPDATE';
 const NODE_UPDATE = 'NODE_UPDATE';
 const SET_PROPERTY = 'SET_PROPERTY';
+const MQTT_STATUS = 'MQTT_STATUS';
 
 let immutableState = immutable.Map({
-  devices: {}, groups: [], loading: true, connection: true
+  devices: {}, groups: [], loading: true, connection: true, mqttStatus: false
 });
 
 function infrastructure (state = immutableState.toJS(), action) {
@@ -31,8 +32,11 @@ function infrastructure (state = immutableState.toJS(), action) {
       immutableState = immutableState.setIn(['devices', action.update.deviceId, 'nodes', action.update.nodeId, 'state', action.update.property], action.update.value);
       return immutableState.toJS();
     case SET_PROPERTY:
-      socket.emit('set_property', action.property);
-      return state;
+      socket.emit('setProperty', action.property);
+      return immutableState.toJS();
+    case MQTT_STATUS:
+      immutableState = immutableState.set('mqttStatus', action.connected);
+      return immutableState.toJS();
     default:
       return state;
   }
@@ -40,6 +44,8 @@ function infrastructure (state = immutableState.toJS(), action) {
 
 let store = createStore(infrastructure);
 let socket = socketio();
+
+// Socket connection / disconnection
 
 socket.on('connect', () => {
   store.dispatch({ type: SET_CONNECTION, connection: true });
@@ -49,11 +55,15 @@ socket.on('disconnect', () => {
   store.dispatch({ type: SET_CONNECTION, connection: false });
 });
 
-socket.on('infrastructure', (data) => {
+// Data right after connection
+
+socket.once('infrastructure', (data) => {
   store.dispatch({ type: INITIAL, initial: data });
 });
 
-socket.on('infrastructure_updated', (update) => {
+// Data coming anytime
+
+socket.on('infrastructureUpdate', (update) => {
   switch (update.type) {
     case 'device':
       store.dispatch({ type: DEVICE_UPDATE, update: update });
@@ -62,6 +72,10 @@ socket.on('infrastructure_updated', (update) => {
       store.dispatch({ type: NODE_UPDATE, update: update });
       break;
   }
+});
+
+socket.on('mqttClientStatus', (connected) => {
+  store.dispatch({ type: MQTT_STATUS, connected });
 });
 
 export default store;

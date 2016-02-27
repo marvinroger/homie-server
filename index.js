@@ -19,18 +19,18 @@ import Infrastructure from './lib/infrastructure';
 const DEFAULT_UI_PORT = 80;
 const DEFAULT_DATADIR = path.join(os.homedir(), '/.homie');
 
-let config = {};
+const config = {};
 
-let bootstrap = (options) => {
-  let uiPort = options.uiPort || DEFAULT_UI_PORT;
-  let dataDir = options.dataDir || DEFAULT_DATADIR;
+const bootstrap = (options) => {
+  const uiPort = options.uiPort || DEFAULT_UI_PORT;
+  const dataDir = options.dataDir || DEFAULT_DATADIR;
   if (typeof options.logLevel !== 'undefined') {
     log.setLogLevel(options.logLevel);
   }
 
   log.info(`Using data directory ${dataDir}`);
 
-  let fail = (message) => {
+  const fail = (message) => {
     log.fatal(message);
     process.exit(1);
   };
@@ -39,7 +39,7 @@ let bootstrap = (options) => {
     fail('UI port must be a valid port');
   }
 
-  let mkdirIfNotExisting = (dir) => {
+  const mkdirIfNotExisting = (dir) => {
     try {
       fs.mkdirSync(dir);
     } catch (err) {
@@ -47,7 +47,7 @@ let bootstrap = (options) => {
     }
   };
 
-  let mkyamlIfNotExisting = (path, object) => {
+  const mkyamlIfNotExisting = (path, object) => {
     try {
       fs.accessSync(path, fs.R_OK | fs.W_OK);
     } catch (err) {
@@ -81,7 +81,7 @@ let bootstrap = (options) => {
   start();
 };
 
-let start = () => {
+const start = async () => {
   const servers = [{
     Class: GuiServer,
     params: { port: config.uiPort }
@@ -90,46 +90,34 @@ let start = () => {
     params: { dataDir: config.dataDir }
   }];
 
-  let entitiesReadyCount = 0;
-  let entityReady = function () {
-    if (++entitiesReadyCount === servers.length + 1 + 1) { // +1 for infrastructure and mqtt
-      log.info(`Homie is ready`);
-      dispatcher.start();
-    }
-  };
+  const infrastructure = new Infrastructure({ dataDir: config.dataDir });
+  await infrastructure.start();
+  dispatcher.attach('infrastructure', infrastructure);
 
-  let infrastructure = new Infrastructure({ dataDir: config.dataDir });
-  infrastructure.on('ready', () => {
-    log.info(`Infrastructure loaded`);
-    dispatcher.attach('infrastructure', infrastructure);
-    entityReady();
-  });
-  infrastructure.start();
+  await (function startServers () {
+    return new Promise((resolve, reject) => {
+      let i = 0;
+      servers.forEach(async function (server) {
+        const serverInstance = new server.Class(server.params);
+        try {
+          const data = await serverInstance.start();
+          dispatcher.attach(serverInstance.getName().toLowerCase(), serverInstance);
+          log.info(`${serverInstance.getName()} server listening on ${data.host}:${data.port}`);
+          if (++i === servers.length) { resolve(); }
+        } catch (err) {
+          log.fatal(`${serverInstance.getName()} server cannot listen`, err);
+          process.exit(1);
+        }
+      });
+    });
+  })();
 
-  let mqttClient = new MqttClient(config.file.mqtt);
-  mqttClient.on('ready', () => {
-    log.info(`MQTT client connected`);
-    dispatcher.attach('mqtt', mqttClient);
-    entityReady();
-  });
+  const mqttClient = new MqttClient(config.file.mqtt);
   mqttClient.start();
+  dispatcher.attach('mqtt', mqttClient);
 
-  servers.forEach(function (server) {
-    let serverInstance = new server.Class(server.params);
-
-    serverInstance.on('ready', function (data) {
-      log.info(`${serverInstance.getName()} server listening on ${data.host}:${data.port}`);
-      dispatcher.attach(serverInstance.getName().toLowerCase(), serverInstance);
-      entityReady();
-    });
-
-    serverInstance.on('error', function (err) {
-      log.fatal(`${serverInstance.getName()} server cannot listen`, err);
-      process.exit(1);
-    });
-
-    serverInstance.start();
-  });
+  log.info('Homie is ready');
+  dispatcher.start();
 };
 
 export default bootstrap;

@@ -1,34 +1,37 @@
 {
-  "types": [
-    {
-      "name": "temperature",
-      "properties": [
-        { "name": "temperature", "type": "float", "settable": false }
-      ]
+  "types": {
+    "temperature": {
+      "properties": {
+        "temperature": { "type": "float", "settable": false }
+      }
     },
-    {
-      "name": "shutters",
-      "properties": [
-        { "name": "level", "type": "percentage", "settable": true }
-      ]
+    "shutters": {
+      "properties": {
+        "level": { "type": "percentage", "settable": true }
+      }
     },
-    {
-      "name": "condition",
-      "properties": [
-        { "name": "condition", "type": "enum", "oneOf": ["clear-day", "clear-night", "rain", "snow", "sleet", "wind", "fog", "cloudy", "partly-cloudy-day", "partly-cloudy-night"], "settable": false }
-      ]
+    "condition": {
+      "properties": {
+        "condition": { "type": "enum", "oneOf": ["clear-day", "clear-night", "rain", "snow", "sleet", "wind", "fog", "cloudy", "partly-cloudy-day", "partly-cloudy-night"], "settable": false }
+      }
     },
-    {
-      "name": "heater",
-      "properties": [
-        { "name": "mode", "type": "enum", "oneOf": ["comfort", "economic", "anti-freeze", "off"], "settable": true }
-      ]
+    "heater": {
+      "properties": {
+        "mode": { "type": "enum", "oneOf": ["comfort", "economic", "anti-freeze", "off"], "settable": true }
+      }
     },
-    {
-      "name": "light",
-      "properties": [
-        { "name": "on", "type": "boolean", "settable": true }
-      ]
+    "shutters": {
+      "properties": {
+        "level": { "type": "percentage", "settable": true }
+      }
+    },
+    "switch": {
+      "properties": {
+        "on": { "type": "boolean", "settable": true }
+      }
+    },
+    "light": {
+      "alias": "switch"
     }
-  ]
+  }
 }

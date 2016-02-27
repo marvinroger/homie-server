@@ -14,7 +14,8 @@ import DeviceContainer from './homie/device-container';
   devices: state.devices,
   groups: state.groups,
   loading: state.loading,
-  connection: state.connection
+  connection: state.connection,
+  mqttStatus: state.mqttStatus
 }), (dispatch) => ({
   setProperty: (property) => dispatch(setProperty(property))
 }))

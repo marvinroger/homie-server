@@ -8,8 +8,9 @@ import yargs from 'yargs';
 
 import bootstrap from '../index';
 import pkg from '../package';
+import log from '../lib/log';
 
-let argv = yargs
+const argv = yargs
   .usage('Usage: $0 [options]')
   .option('uiPort', {
     describe: 'Port you want the UI to listen to. Defaults to 80'
@@ -24,20 +25,21 @@ let argv = yargs
   .locale('en')
   .argv;
 
-let homieStyled = clor.magenta(`\
-  _ _              _
- | | | ___ ._ _ _ <_> ___
- |   |/ . \\| ' ' || |/ ._>
- |_|_|\\___/|_|_|_||_|\\___.
-`).toString();
+// Font: Dr Pepper
+const homieStyled = clor.magenta(`\
+ _____           _        _____
+|  |  |___ _____|_|___   |   __|___ ___ _ _ ___ ___
+|     | . |     | | -_|  |__   | -_|  _| | | -_|  _|
+|__|__|___|_|_|_|_|___|  |_____|___|_|  \\_/|___|_|
+`);
 
-console.log(homieStyled);
-console.log(clor.magenta('Version ').bold.magenta(pkg.version).line());
+log.print(homieStyled);
+log.print(clor.magenta('Version ').bold.magenta(pkg.version).line());
 
-console.log(clor.magenta('See ').underline.magenta('https://git.io/homie-server#configuration').line());
+log.print(clor.magenta('See ').underline.magenta('https://git.io/homie-server#configuration').line());
 
-console.log(clor.magenta('Homie server IP is ').bold.underline.magenta(ip.v4())());
-console.log(clor.magenta("Make sure this IP won't change over time").line());
+log.print(clor.magenta('Homie server IP is ').bold.underline.magenta(ip.v4())());
+log.print(clor.magenta("Make sure this IP won't change over time").line());
 
 bootstrap({
   uiPort: argv.uiPort,
