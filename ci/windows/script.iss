@@ -35,7 +35,7 @@ Name: install_service; Description: "Install as a service";
 Name: "{group}\Homie Server"; Filename: "{app}\homie.cmd"; WorkingDir: "{app}"; IconFilename: "{app}\icon.ico"
 Name: "{group}\Start service"; Filename: "{app}\service_start.cmd"; WorkingDir: "{app}"; Tasks: install_service
 Name: "{group}\Stop service"; Filename: "{app}\service_stop.cmd"; WorkingDir: "{app}"; Tasks: install_service
-Name: "{group}\Restart service"; Filename: "{{app}\service_restart.cmd"; WorkingDir: "{app}"; Tasks: install_service
+Name: "{group}\Restart service"; Filename: "{app}\service_restart.cmd"; WorkingDir: "{app}"; Tasks: install_service
 Name: "{group}\Uninstall"; Filename: "{uninstallexe}"
 
 [Run]
@@ -53,8 +53,8 @@ Type: filesandordirs; Name: "{userappdata}\Homie Server"; Tasks: install_service
 Name: "english"; MessagesFile: "compiler:Default.isl"
 
 [Files]
-Source: "\icon.ico"; DestDir: "{app}"; Flags: ignoreversion
-Source: "\bundle\*"; DestDir: "{app}"; Flags: ignoreversion
-Source: "\bundle\node_modules\*"; DestDir: "{app}\node_modules"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "\service_*.cmd"; DestDir: "{app}"; Tasks: install_service; Flags: ignoreversion
+Source: "icon.ico"; DestDir: "{app}"; Flags: ignoreversion
+Source: "bundle\*"; DestDir: "{app}"; Flags: ignoreversion
+Source: "bundle\node_modules\*"; DestDir: "{app}\node_modules"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "service_*.cmd"; DestDir: "{app}"; Tasks: install_service; Flags: ignoreversion
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
