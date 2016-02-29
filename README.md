@@ -3,7 +3,7 @@ Homie server
 
 [![npm version](https://img.shields.io/npm/v/homie-server.svg?style=flat-square)](https://www.npmjs.com/package/homie-server) [![Travis CI](https://img.shields.io/travis/marvinroger/homie-server.svg?style=flat-square)](https://travis-ci.org/marvinroger/homie-server) [![Coveralls](https://img.shields.io/coveralls/marvinroger/homie-server.svg?style=flat-square)](https://coveralls.io/r/marvinroger/homie-server) (broken) [![Dependency Status](https://img.shields.io/david/marvinroger/homie-server.svg?style=flat-square)](https://david-dm.org/marvinroger/homie-server) [![devDependency Status](https://img.shields.io/david/dev/marvinroger/homie-server.svg?style=flat-square)](https://david-dm.org/marvinroger/homie-server#info=devDependencies) ![Built with love](https://img.shields.io/badge/built%20with-%E2%99%A5-ff69b4.svg?style=flat-square)
 
-Server of Homie, an opinionated home automation system using MQTT. Built with Node.js. The project is currently in alpha.
+A Web server for Homie, an MQTT convention for the IoT. Built with Node.js. The project is currently in alpha.
 
 ![Homie server screenshot](screenshot.png)
 
@@ -19,7 +19,7 @@ Server of Homie, an opinionated home automation system using MQTT. Built with No
 
 ## Usage
 
-The Homie server can only be started using the CLI interface. Start Homie by calling `homie`. You can optionally provide a `--dataDir` argument that will be used to store the Homie data. By default, this directory is located at `<home directory>/.homie`. You can also configure the HTTP server serving the UI with `--uiPort`, else it defaults to 80.
+The Homie server can only be started using the CLI interface. Start Homie by calling `homie`. You can optionally provide a `--dataDir` argument that will be used to store the Homie data. By default, this directory is located at `<home directory>/.homie`. You can also configure the HTTP server serving the UI with `--uiPort`, else it defaults to 80. Finally, you can change the log level of the output with the `--logLevel` parameter followed by the minimum log level to show (`0` for fatal, `1` for error, `2` for warning, `3` for info, `4` for debug).
 
 ### Configuration
 
