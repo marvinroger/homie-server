@@ -49,7 +49,7 @@ if ($env:APPVEYOR -eq "True") {
 
   $result = Invoke-RestMethod @releaseParams
   $uploadUrl = $result | Select -ExpandProperty upload_url
-  $uploadUrl = $uploadUri -replace '\{\?name,label\}', "?name=$setupName.exe"
+  $uploadUrl = $uploadUrl -replace '\{\?name,label\}', "?name=$setupName.exe"
   $uploadFile = Join-Path -path "$PSScriptRoot\output\" -childpath "$setupName.exe"
 
   $uploadParams = @{
