@@ -1,16 +1,14 @@
-environment:
-  GITHUB_TOKEN:
-    secure: BhA4uA3sBTnURvUT3dKhJBuin03FNrFwz/KQwDoJbLiabujYG6Df/Q01ny3PRJOU
-
 branches:
   only:
     - master
 
 environment:
-  nodejs_version: "5.5.0"
+  NODEJS_VERSION: "5.5.0"
+  GITHUB_TOKEN:
+    secure: BhA4uA3sBTnURvUT3dKhJBuin03FNrFwz/KQwDoJbLiabujYG6Df/Q01ny3PRJOU
 
 install:
-  - ps: Install-Product node $env:nodejs_version x86
+  - ps: Install-Product node $env:NODEJS_VERSION x86
   - ps: choco install --x86 -yf InnoSetup
 
 build_script:
