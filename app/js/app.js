@@ -53,7 +53,7 @@ class App extends React.Component {
         </div>
 
         <div className='ui main container'>
-          <Menu groups={this.props.groups} connection={this.props.connection} onMenuChange={this.onGroupChange.bind(this)} />
+          <Menu groups={this.props.groups} connection={this.props.connection} mqtt={this.props.mqttStatus} onMenuChange={this.onGroupChange.bind(this)} />
           <DeviceContainer groups={this.props.groups} devicesShown={this.state.devicesShown} devices={this.props.devices} setProperty={this.props.setProperty} />
         </div>
       </div>
@@ -73,5 +73,6 @@ App.propTypes = {
   devices: React.PropTypes.array.isRequired,
   groups: React.PropTypes.array.isRequired,
   connection: React.PropTypes.bool.isRequired,
+  mqttStatus: React.PropTypes.bool.isRequired,
   setProperty: React.PropTypes.func.isRequired
 };

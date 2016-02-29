@@ -56,9 +56,26 @@ export default class Menu extends React.Component {
       </div>;
     }
 
+    let connIndicatorClasses = classNames({
+      'ui': true,
+      'red': !this.props.connection,
+      'green': this.props.connection,
+      'empty': true,
+      'circular': true,
+      'label': true
+    });
+
+    let mqttIndicatorClasses = classNames({
+      'ui': true,
+      'red': !this.props.mqtt || !this.props.connection,
+      'green': this.props.connection && this.props.mqtt,
+      'empty': true,
+      'circular': true,
+      'label': true
+    });
+
     return (
       <div>
-        {errorMessage}
         <div className='ui centered grid'>
           <div className='center aligned column'>
             <div className='ui compact text menu'>
@@ -66,9 +83,22 @@ export default class Menu extends React.Component {
                 <img className='logo' src='img/logo.png'/>
                 Homie
               </div>
+
+              <div className='right menu'>
+                <div className='item'>
+                  Serveur
+                  <span className={connIndicatorClasses}></span>
+                </div>
+
+                <div className='item'>
+                  MQTT
+                  <span className={mqttIndicatorClasses}></span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
+        {errorMessage}
         Groupe&nbsp;&nbsp;
         <div className='ui dropdown floating labeled icon button'>
           {this.state.active.name} <i className='filter icon'></i>
@@ -84,6 +114,7 @@ export default class Menu extends React.Component {
 
 Menu.propTypes = {
   connection: React.PropTypes.bool.isRequired,
+  mqtt: React.PropTypes.bool.isRequired,
   groups: React.PropTypes.array.isRequired,
   onMenuChange: React.PropTypes.func.isRequired
 };
