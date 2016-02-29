@@ -7,8 +7,9 @@ import socketio from 'socket.io-client';
 
 const SET_CONNECTION = 'SET_CONNECTION';
 const INITIAL = 'INITIAL';
-const DEVICE_UPDATE = 'DEVICE_UPDATE';
-const NODE_UPDATE = 'NODE_UPDATE';
+const DEVICE_STATE_UPDATE = 'DEVICE_STATE_UPDATE';
+const NODE_CURRENT_STATE_UPDATE = 'NODE_CURRENT_STATE_UPDATE';
+const NODE_WANTED_STATE_UPDATE = 'NODE_WANTED_STATE_UPDATE';
 const SET_PROPERTY = 'SET_PROPERTY';
 const MQTT_STATUS = 'MQTT_STATUS';
 
@@ -25,11 +26,14 @@ function infrastructure (state = immutableState.toJS(), action) {
       immutableState = immutableState.set('loading', false);
       immutableState = immutableState.mergeDeep(action.initial);
       return immutableState.toJS();
-    case DEVICE_UPDATE:
+    case DEVICE_STATE_UPDATE:
       immutableState = immutableState.setIn(['devices', action.update.deviceId, 'state', action.update.property], action.update.value);
       return immutableState.toJS();
-    case NODE_UPDATE:
-      immutableState = immutableState.setIn(['devices', action.update.deviceId, 'nodes', action.update.nodeId, 'state', action.update.property], action.update.value);
+    case NODE_CURRENT_STATE_UPDATE:
+      immutableState = immutableState.setIn(['devices', action.update.deviceId, 'nodes', action.update.nodeId, 'state', 'current', action.update.property], action.update.value);
+      return immutableState.toJS();
+    case NODE_WANTED_STATE_UPDATE:
+      immutableState = immutableState.setIn(['devices', action.update.deviceId, 'nodes', action.update.nodeId, 'state', 'wanted', action.update.property], action.update.value);
       return immutableState.toJS();
     case SET_PROPERTY:
       socket.emit('setProperty', action.property);
@@ -65,11 +69,14 @@ socket.once('infrastructure', (data) => {
 
 socket.on('infrastructureUpdate', (update) => {
   switch (update.type) {
-    case 'device':
-      store.dispatch({ type: DEVICE_UPDATE, update: update });
+    case 'deviceState':
+      store.dispatch({ type: DEVICE_STATE_UPDATE, update: update });
       break;
-    case 'node':
-      store.dispatch({ type: NODE_UPDATE, update: update });
+    case 'nodeCurrentState':
+      store.dispatch({ type: NODE_CURRENT_STATE_UPDATE, update: update });
+      break;
+    case 'nodeWantedState':
+      store.dispatch({ type: NODE_WANTED_STATE_UPDATE, update: update });
       break;
   }
 });

@@ -29,6 +29,12 @@ export default class Device extends React.Component {
   }
 
   render () {
+    let nodeInWantedState = true;
+    Object.keys(this.props.state.wanted).forEach((property) => {
+      if (this.props.state.current[property] !== this.props.state.wanted[property]) {
+        nodeInWantedState = false;
+      }
+    });
     let signalLabelClasses = classNames({
       'device-status': true,
       'ui': true,
@@ -49,14 +55,21 @@ export default class Device extends React.Component {
 
     return (
       <div className='ui column'>
-        <div className='ui fluid card'>
+        <div className='ui fluid card' style={{overflow: 'hidden'}}>
           <div className='image'>
             <img src={typeof this.props.image !== 'undefined' ? `img/icons/${this.props.type}/${this.props.image}.png` : 'img/icons/common/unknown.png'} style={{backgroundColor: this.props.nodeColor || this.props.deviceColor || this.props.groupColor || this.props.color, padding: '20px'}}/>
           </div>
 
           <div className='content'>
             <a className='header'>{ this.props.name }</a>
-            <a className={signalLabelClasses} data-html={tooltipHtml} data-variation='inverted' data-position='left center'><i className='wifi icon' style={{marginRight: 0}}/></a>
+            {(() => {
+              if (!nodeInWantedState) {
+                return <a className='ui white left corner label'><i className='refresh icon'/></a>;
+              }
+            })()}
+            {
+            }
+            <a className={signalLabelClasses} data-html={tooltipHtml} data-variation='inverted' data-position='left center'><i className='wifi icon'/></a>
             <div className='meta'>
               <i className='marker icon'></i><span className='group'>{ this.props.location }</span>
             </div>
@@ -82,6 +95,10 @@ Device.propTypes = {
   nodeId: React.PropTypes.string.isRequired,
   nodeColor: React.PropTypes.string,
   groupColor: React.PropTypes.string,
+  state: React.PropTypes.shape({
+    current: React.PropTypes.object.isRequired,
+    wanted: React.PropTypes.object.isRequired
+  }).isRequired,
   deviceState: React.PropTypes.shape({
     online: React.PropTypes.bool.isRequired,
     name: React.PropTypes.string,

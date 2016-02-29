@@ -15,7 +15,7 @@ export default class Light extends React.Component {
 
   render () {
     return (
-      <Device image={typeof this.props.state.on === 'undefined' ? undefined : this.props.state.on ? 'on' : 'off'} color='#ea6153' ref='device' {...this.props}>
+      <Device image={typeof this.props.state.current.on === 'undefined' ? undefined : this.props.state.current.on ? 'on' : 'off'} color='#ea6153' ref='device' {...this.props}>
         <div className='ui two buttons'>
           <button className='ui green compact button' onClick={() => this.toggle('true')}>
             ON
@@ -31,6 +31,8 @@ export default class Light extends React.Component {
 
 Light.propTypes = {
   state: React.PropTypes.shape({
-    on: React.PropTypes.bool
+    current: React.PropTypes.shape({
+      on: React.PropTypes.bool
+    })
   })
 };

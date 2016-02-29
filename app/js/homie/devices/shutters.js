@@ -23,7 +23,7 @@ export default class Shutters extends React.Component {
 
   render () {
     return (
-      <Device image={typeof this.props.state.level === 'undefined' ? undefined : this.props.state.level === 100 ? 100 : this.props.state.level >= 90 ? 90 : this.props.state.level >= 80 ? 80 : this.props.state.level >= 70 ? 70 : this.props.state.level >= 60 ? 60 : this.props.state.level >= 50 ? 50 : this.props.state.level >= 40 ? 40 : this.props.state.level >= 30 ? 30 : this.props.state.level >= 20 ? 20 : this.props.state.level >= 10 ? 10 : 0} color='#f1c40f' ref='device' {...this.props}>
+      <Device image={typeof this.props.state.current.level === 'undefined' ? undefined : this.props.state.current.level === 100 ? 100 : this.props.state.current.level >= 90 ? 90 : this.props.state.current.level >= 80 ? 80 : this.props.state.current.level >= 70 ? 70 : this.props.state.current.level >= 60 ? 60 : this.props.state.current.level >= 50 ? 50 : this.props.state.current.level >= 40 ? 40 : this.props.state.current.level >= 30 ? 30 : this.props.state.current.level >= 20 ? 20 : this.props.state.current.level >= 10 ? 10 : 0} color='#f1c40f' ref='device' {...this.props}>
         <div className='ui three buttons'>
           <button className='ui green icon compact button' onClick={() => this.open()}>
             <i className='chevron up icon'></i>
@@ -42,6 +42,8 @@ export default class Shutters extends React.Component {
 
 Shutters.propTypes = {
   state: React.PropTypes.shape({
-    level: React.PropTypes.number
+    current: React.PropTypes.shape({
+      level: React.PropTypes.number
+    })
   })
 };

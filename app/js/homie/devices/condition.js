@@ -11,7 +11,7 @@ export default class Condition extends React.Component {
 
   render () {
     let conditionText;
-    switch (this.props.state.condition) {
+    switch (this.props.state.current.condition) {
       case 'clear-day':
         conditionText = 'Jour clair';
         break;
@@ -45,7 +45,7 @@ export default class Condition extends React.Component {
     }
 
     return (
-      <Device image={this.props.state.condition} color='#325159' {...this.props}>
+      <Device image={this.props.state.current.condition} color='#325159' {...this.props}>
         <h3 style={{ color: '#1B1C1D' }}>
           { typeof conditionText !== 'undefined' ? conditionText : '?' }
         </h3>
@@ -56,6 +56,8 @@ export default class Condition extends React.Component {
 
 Condition.propTypes = {
   state: React.PropTypes.shape({
-    condition: React.PropTypes.string
+    current: React.PropTypes.shape({
+      condition: React.PropTypes.string
+    })
   })
 };
