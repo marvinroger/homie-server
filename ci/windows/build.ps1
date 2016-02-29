@@ -1,6 +1,3 @@
-# Stop program on error
-$ErrorActionPreference = "Stop"
-
 Remove-Item "$PSScriptRoot\sources\bundle\" -Force -Recurse -ErrorAction Ignore
 New-Item -ItemType Directory -Force -Path "$PSScriptRoot\sources\bundle\"
 
