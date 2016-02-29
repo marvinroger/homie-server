@@ -2,11 +2,7 @@
 /dist/
 /coverage/
 /public/
-/ci/windows/sources/*
-!/ci/windows/sources/icon.ico
-!/ci/windows/sources/service_start
-!/ci/windows/sources/service_stop
-!/ci/windows/sources/service_restart
+/ci/windows/sources/bundle/
 /ci/windows/output/
 
 npm-debug.log
