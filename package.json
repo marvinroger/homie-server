@@ -9,6 +9,8 @@
     "test-standard": "semistandard | snazzy",
     "test-deps": "depcheck --ignore-dirs=dist,public --ignores=babel*,semantic-ui",
     "test-tests": "NODE_ENV=test babel-node ./node_modules/.bin/tape ./test/**/*.js | tap-spec",
+    "wintest": "npm run test-standard && npm run test-deps && npm run wintest-tests",
+    "wintest-tests": "set NODE_ENV=test && babel-node ./node_modules/tape/bin/tape ./test/**/*.js | tap-spec",
     "coverage": "NODE_ENV=test babel-node ./node_modules/.bin/isparta cover --report lcov ./test/*.js",
     "coveralls": "npm run coverage --silent && coveralls < ./coverage/lcov.info",
     "dev": "gulp dev",
