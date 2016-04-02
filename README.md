@@ -56,11 +56,11 @@ devices:
         name: Bed light
 
 groups:
-  id: first-floor
-  name: First floor
-  devices:
-    - abcd0123
-    - efab4567
+  - id: first-floor
+    name: First floor
+    devices:
+      - abcd0123
+      - efab4567
 ```
 
 3. The `ota/manifest.yml` file. It contains a definition of the firmwares for your devices, like so:
