@@ -6,7 +6,7 @@ import { createStore } from 'redux';
 import socketio from 'socket.io-client';
 
 const SET_CONNECTION = 'SET_CONNECTION';
-const INITIAL = 'INITIAL';
+const INFRASTRUCTURE = 'INFRASTRUCTURE';
 const DEVICE_STATE_UPDATE = 'DEVICE_STATE_UPDATE';
 const NODE_CURRENT_STATE_UPDATE = 'NODE_CURRENT_STATE_UPDATE';
 const NODE_WANTED_STATE_UPDATE = 'NODE_WANTED_STATE_UPDATE';
@@ -22,7 +22,7 @@ function infrastructure (state = immutableState.toJS(), action) {
     case SET_CONNECTION:
       immutableState = immutableState.set('connection', action.connection);
       return immutableState.toJS();
-    case INITIAL:
+    case INFRASTRUCTURE:
       immutableState = immutableState.set('loading', false);
       immutableState = immutableState.mergeDeep(action.initial);
       return immutableState.toJS();
@@ -62,7 +62,7 @@ socket.on('disconnect', () => {
 // Data right after connection
 
 socket.once('infrastructure', (data) => {
-  store.dispatch({ type: INITIAL, initial: data });
+  store.dispatch({ type: INFRASTRUCTURE, initial: data });
 });
 
 // Data coming anytime
