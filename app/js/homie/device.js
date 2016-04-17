@@ -6,6 +6,8 @@ import React from 'react';
 
 import classNames from 'classnames';
 
+import {secondsToDurationString} from '../helpers';
+
 export default class Device extends React.Component {
   constructor (props) {
     super(props);
@@ -50,6 +52,7 @@ export default class Device extends React.Component {
       <b>Firmware objet : </b> ${this.props.deviceState.fwname ? this.props.deviceState.fwname + (this.props.deviceState.fwversion ? ' (' + this.props.deviceState.fwversion + ')' : '') : 'inconnu'}<br>
       <b>ID noeud : </b> ${this.props.nodeId}<br>
       <b>Signal</b> : ${this.props.deviceState.signal ? this.props.deviceState.signal + '%' : 'inconnu'}<br>
+      <b>Uptime</b> : ${this.props.deviceState.uptime ? secondsToDurationString(this.props.deviceState.uptime) : 'inconnu'}<br>
       <b>IP</b> : ${this.props.deviceState.localip ? this.props.deviceState.localip : 'inconnue'}
     `;
 
@@ -105,6 +108,7 @@ Device.propTypes = {
     fwname: React.PropTypes.string,
     fwversion: React.PropTypes.string,
     signal: React.PropTypes.number,
+    uptime: React.PropTypes.number,
     localip: React.PropTypes.string,
     version: React.PropTypes.version
   }).isRequired,
