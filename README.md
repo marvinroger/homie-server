@@ -1,6 +1,8 @@
 Homie server
 ============
 
+**![warning](https://cdn2.iconfinder.com/data/icons/gnomeicontheme/16x16/status/gtk-dialog-warning.png) Currently unmaintained. Don't expect updates or support ATM, I prefer to focus on [homie-esp8266](https://github.com/marvinroger/homie-esp8266). Note this project is not abandoned, only on hold.**
+
 [![npm version](https://img.shields.io/npm/v/homie-server.svg?style=flat-square)](https://www.npmjs.com/package/homie-server) [![Travis CI](https://img.shields.io/travis/marvinroger/homie-server.svg?style=flat-square)](https://travis-ci.org/marvinroger/homie-server) [![Coveralls](https://img.shields.io/coveralls/marvinroger/homie-server.svg?style=flat-square)](https://coveralls.io/r/marvinroger/homie-server) (broken) [![Dependency Status](https://img.shields.io/david/marvinroger/homie-server.svg?style=flat-square)](https://david-dm.org/marvinroger/homie-server) [![devDependency Status](https://img.shields.io/david/dev/marvinroger/homie-server.svg?style=flat-square)](https://david-dm.org/marvinroger/homie-server#info=devDependencies) ![Built with love](https://img.shields.io/badge/built%20with-%E2%99%A5-ff69b4.svg?style=flat-square)
 
 A Web server for Homie, an MQTT convention for the IoT. Built with Node.js. The project is currently in alpha.
